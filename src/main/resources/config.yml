@@ -1,4 +1,11 @@
+# to how many partitions split player count
+# ex: 105 players on server, if you specify {update-partitions-amount} as 4 it will split player inventory calculation
+# for 4 parts; 25, 25, 25, 30, every part will be calculated every {task-schedule-time}, with default value of 20,
+# it will take server 4 seconds to calculate all players inventory, and it will constantly repeat
+update-partitions-amount: 4
 
+# update player inventory(apply effects) task period, in ticks(20 ticks = 1 sec)
+task-schedule-time: 20
 
 effect-items:
 
@@ -14,6 +21,8 @@ effect-items:
 
     # if true, player have to wear that item to make it work, hands does not count(for this look at $must-hold)
     must-wear: true
+
+    # if both {must-hold-mainhand} and {must-hold-offhand} that makes it work for both hands
 
     # if true, player have to hold item in main hand to make it work
     must-hold-mainhand: true

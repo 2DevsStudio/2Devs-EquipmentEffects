@@ -20,7 +20,13 @@ public class BaseConfiguration {
     private final BaseEquipmentRepository baseEquipmentRepository;
     private EquipmentEffects equipmentEffects;
     
+    private int taskScheduleTimeTicks;
+    private int updatePartitionsAmount;
+    
     public void initialize() {
+        
+        taskScheduleTimeTicks = fileConfiguration.getInt("task-schedule-time");
+        updatePartitionsAmount = fileConfiguration.getInt("update-partitions-amount");
         
         loadEffectItems();
     }
