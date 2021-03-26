@@ -9,6 +9,7 @@ import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepos
 import com.ignitedev.devsequipmenteffects.command.EquipmentEffectsAdminCommand;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.listeners.ArmorTakeOffListener;
+import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
 import com.ignitedev.devsequipmenteffects.listeners.WearArmorListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
 import org.bukkit.Bukkit;
@@ -70,6 +71,7 @@ public final class EquipmentEffects extends JavaPlugin {
         
         pluginManager.registerEvents(new ArmorTakeOffListener(baseEquipmentRepository), this);
         pluginManager.registerEvents(new WearArmorListener(baseEquipmentRepository), this);
+        pluginManager.registerEvents(new PlayerQuitListener(basePlayerRepository), this);
     }
     
     private void registerEquipmentFactories(BaseEquipmentRepository baseEquipmentRepository) {
