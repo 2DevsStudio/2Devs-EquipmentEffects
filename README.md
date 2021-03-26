@@ -3,12 +3,13 @@
 
 ### Description ###
 
-This is a plugin that allows you to create equipment which gives you special effects like Speed, Haste etc.
+This is a plugin that allows you to create equipment or held items which gives you potion effects, permissions, particles or execute commands :)
 
 ### Todo List ###
 
 - Giving player permission on effect
 - Particles
+- Executing commands
 
 ### Commands ###
 
