@@ -36,7 +36,13 @@ public class DefaultBaseEquipmentFactory implements BaseEquipmentFactory {
         List<BaseEquipment> baseEquipments = new ArrayList<>();
         
         for (ItemStack itemStack : itemStacks) {
-            baseEquipments.add(convertToBaseEquipment(itemStack));
+            BaseEquipment baseEquipment = convertToBaseEquipment(itemStack);
+            
+            if (baseEquipment == null) {
+                continue;
+            }
+            
+            baseEquipments.add(baseEquipment);
         }
         
         return baseEquipments;
