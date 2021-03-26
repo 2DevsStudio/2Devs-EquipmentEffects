@@ -26,6 +26,10 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
     
     public @Nullable BaseEquipment findByItemStack(ItemStack itemStack) {
         
+        if (itemStack == null || itemStack.getType().isAir()) {
+            return null;
+        }
+        
         for (BaseEquipment value : baseEquipmentCache.values()) {
             if (value.getItemStack().isSimilar(itemStack)) {
                 return value;
