@@ -13,9 +13,11 @@ public final class EquipmentEffects extends JavaPlugin {
     
     public BaseEquipmentFactories baseEquipmentFactories;
     public BaseEffectFactories baseEffectFactories;
+    public static EquipmentEffects INSTANCE;
     
     @Override
     public void onEnable() {
+        INSTANCE = this;
         
         saveDefaultConfig();
         
