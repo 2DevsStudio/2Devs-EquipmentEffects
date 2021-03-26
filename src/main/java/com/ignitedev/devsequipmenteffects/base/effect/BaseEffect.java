@@ -20,4 +20,9 @@ public class BaseEffect implements Applicable {
         
         player.addPotionEffect(defaultFactory.convertToPotionEffect(this));
     }
+    
+    @Override
+    public void unApply(Player player) {
+        player.removePotionEffect(potionEffectType);
+    }
 }
