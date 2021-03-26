@@ -8,6 +8,7 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.listeners.ArmorTakeOffListener;
 import com.ignitedev.devsequipmenteffects.listeners.WearArmorListener;
+import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
@@ -26,21 +27,27 @@ public final class EquipmentEffects extends JavaPlugin {
         
         saveDefaultConfig();
         
-        registerEquipmentFactories();
-        registerEffectsFactories();
-        
         BaseEquipmentRepository baseEquipmentRepository = new BaseEquipmentRepository();
         FileConfiguration config = getConfig();
         BaseConfiguration baseConfiguration = new BaseConfiguration(config, baseEquipmentRepository);
         
         baseConfiguration.initialize();
+    
+        registerEquipmentFactories(baseEquipmentRepository);
+        registerEffectsFactories();
         
         registerListeners(Bukkit.getPluginManager(), baseEquipmentRepository);
+        scheduleTasks(baseConfiguration);
     }
     
     @Override
     public void onDisable() {
     
+    }
+    
+    private void scheduleTasks(BaseConfiguration baseConfiguration){
+        new UpdatePlayerEffectsTask(baseConfiguration, this).runTaskTimer(this, 100,
+                baseConfiguration.getTaskScheduleTimeTicks());
     }
     
     private void registerListeners(PluginManager pluginManager, BaseEquipmentRepository baseEquipmentRepository) {
@@ -49,10 +56,10 @@ public final class EquipmentEffects extends JavaPlugin {
         pluginManager.registerEvents(new WearArmorListener(baseEquipmentRepository), this);
     }
     
-    private void registerEquipmentFactories() {
+    private void registerEquipmentFactories(BaseEquipmentRepository baseEquipmentRepository) {
         
         baseEquipmentFactories = new BaseEquipmentFactories();
-        baseEquipmentFactories.register("DEFAULT", new DefaultBaseEquipmentFactory());
+        baseEquipmentFactories.register("DEFAULT", new DefaultBaseEquipmentFactory(baseEquipmentRepository));
     }
     
     private void registerEffectsFactories() {
