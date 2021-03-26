@@ -18,19 +18,21 @@ public class BaseConfiguration {
     
     private final FileConfiguration fileConfiguration;
     private final BaseEquipmentRepository baseEquipmentRepository;
-    private EquipmentEffects equipmentEffects;
+    private final EquipmentEffects equipmentEffects;
     
     private int taskScheduleTimeTicks;
     private int updatePartitionsAmount;
+    private int partitionMinimumPlayersMultiplier;
     
     private String adminCommandUsage;
     
     public void initialize() {
         
+        partitionMinimumPlayersMultiplier = fileConfiguration.getInt("partition-minimum-players-multiplier");
         taskScheduleTimeTicks = fileConfiguration.getInt("task-schedule-time");
         updatePartitionsAmount = fileConfiguration.getInt("update-partitions-amount");
         
-        adminCommandUsage = fileConfiguration.getString("admin-command-usage");
+        adminCommandUsage = fileConfiguration.getString("messages.admin-command-usage");
         
         loadEffectItems();
     }
