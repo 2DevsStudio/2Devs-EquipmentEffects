@@ -23,7 +23,7 @@ public class PlayerQuitListener implements Listener {
             return;
         }
         
-        basePlayer.getActiveBaseEffects().forEach(baseEffect -> player.removePotionEffect(baseEffect.getPotionEffectType()));
+        basePlayer.clearPlayerActiveEffects();
     }
     
 }

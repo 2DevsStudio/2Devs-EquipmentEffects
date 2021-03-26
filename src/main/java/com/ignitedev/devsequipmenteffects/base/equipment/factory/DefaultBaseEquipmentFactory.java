@@ -19,12 +19,6 @@ public class DefaultBaseEquipmentFactory implements BaseEquipmentFactory {
     private final BaseEquipmentRepository baseEquipmentRepository;
     
     @Override
-    public ItemStack convertToItemStack(BaseEquipment baseEquipment) {
-        
-        return baseEquipment.getItemStack();
-    }
-    
-    @Override
     public @Nullable BaseEquipment convertToBaseEquipment(ItemStack itemStack) {
         
         return baseEquipmentRepository.findByItemStack(itemStack);

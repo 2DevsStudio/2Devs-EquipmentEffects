@@ -41,7 +41,7 @@ public final class EquipmentEffects extends JavaPlugin {
         
         baseConfiguration.initialize();
         
-        registerListeners(Bukkit.getPluginManager(), baseEquipmentRepository);
+        registerListeners(Bukkit.getPluginManager());
         scheduleTasks(baseConfiguration);
         registerCommands(baseConfiguration, baseEquipmentRepository);
     }
@@ -65,7 +65,7 @@ public final class EquipmentEffects extends JavaPlugin {
         );
     }
     
-    private void registerListeners(PluginManager pluginManager, BaseEquipmentRepository baseEquipmentRepository) {
+    private void registerListeners(PluginManager pluginManager) {
         
         pluginManager.registerEvents(new PlayerQuitListener(basePlayerRepository), this);
     }

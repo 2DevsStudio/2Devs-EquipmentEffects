@@ -10,6 +10,7 @@ This is a plugin that allows you to create equipment or held items which gives y
 - Giving player permission on effect
 - Particles
 - Executing commands
+- NBT support
 
 ### Commands ###
 

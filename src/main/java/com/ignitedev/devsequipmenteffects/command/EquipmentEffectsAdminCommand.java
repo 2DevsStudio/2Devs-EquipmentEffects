@@ -33,6 +33,16 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
                 ((Player) sender).getInventory().addItem(baseEquipmentById.getItemStack());
                 return true;
             }
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
+            
+            StringBuilder stringBuilder = new StringBuilder("Available: ");
+    
+            for (String identifier : baseEquipmentRepository.getBaseEquipmentCache().keySet()) {
+                stringBuilder.append(identifier).append("|");
+            }
+            
+            sender.sendMessage(stringBuilder.toString());
+            return true;
         }
         
         

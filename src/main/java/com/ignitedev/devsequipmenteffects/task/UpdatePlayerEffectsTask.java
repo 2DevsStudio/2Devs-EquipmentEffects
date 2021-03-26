@@ -76,7 +76,7 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
             Validate.notNull(basePlayer, "Base Player is null, Check your console for possible exception ");
             
             if (!player.isOnline()) {
-                basePlayer.getActiveBaseEffects().clear();
+                basePlayer.clearPlayerActiveEffects();
                 continue;
             }
             
@@ -88,9 +88,7 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
             List<BaseEquipment> baseEquipments = defaultFactory.convertToBaseEquipments(
                     Arrays.asList(inventory.getContents()));
             
-            basePlayer.getActiveBaseEffects()
-                    .forEach(potionEffect -> player.removePotionEffect(potionEffect.getPotionEffectType()));
-            basePlayer.getActiveBaseEffects().clear();
+            basePlayer.clearPlayerActiveEffects();
             
             if (!baseEquipments.isEmpty()) {
                 
@@ -129,14 +127,11 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
                 ItemStack[] armorContents = player.getInventory().getArmorContents();
                 
                 for (ItemStack armorContent : armorContents) {
-                    
-                    if (armorContent == null) {
-                        continue;
-                    }
-                    
-                    if (armorContent.isSimilar(itemStack)) {
-                        baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
-                        break;
+                    if (armorContent != null) {
+                        if (armorContent.isSimilar(itemStack)) {
+                            baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
+                            break;
+                        }
                     }
                 }
             }

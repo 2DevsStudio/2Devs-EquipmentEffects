@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface BaseEquipmentFactory extends Factory {
     
-    ItemStack convertToItemStack(BaseEquipment baseEquipment);
-    
     @Nullable BaseEquipment convertToBaseEquipment(ItemStack itemStack);
     
     List<BaseEquipment> convertToBaseEquipments(List<ItemStack> itemStacks);
