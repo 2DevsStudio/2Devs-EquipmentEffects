@@ -3,7 +3,7 @@
 # default 2 multiplier, it will enable partitioning when you have at least 8 players, below this number
 # it will update for all players at once
 #
-# 2 is minimum, otherwise it can throw an exception
+# 2 is minimum, otherwise it can throw an IllegalArgumentException
 partition-minimum-players-multiplier: 2
 
 # to how many partitions split player count

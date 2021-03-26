@@ -5,6 +5,7 @@ import com.ignitedev.devsequipmenteffects.base.effect.factory.DefaultBaseEffectF
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.BaseEquipmentFactories;
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.DefaultBaseEquipmentFactory;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
+import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.command.EquipmentEffectsAdminCommand;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.listeners.ArmorTakeOffListener;
@@ -17,9 +18,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class EquipmentEffects extends JavaPlugin {
     
+    public static EquipmentEffects INSTANCE;
     public BaseEquipmentFactories baseEquipmentFactories;
     public BaseEffectFactories baseEffectFactories;
-    public static EquipmentEffects INSTANCE;
+    public BasePlayerRepository basePlayerRepository;
+    public BaseEquipmentRepository baseEquipmentRepository;
     
     @Override
     public void onEnable() {
@@ -28,15 +31,17 @@ public final class EquipmentEffects extends JavaPlugin {
         
         saveDefaultConfig();
         
-        BaseEquipmentRepository baseEquipmentRepository = new BaseEquipmentRepository();
+        this.baseEquipmentRepository = new BaseEquipmentRepository();
+        this.basePlayerRepository = new BasePlayerRepository();
+        
         FileConfiguration config = getConfig();
         BaseConfiguration baseConfiguration = new BaseConfiguration(config, baseEquipmentRepository, this);
         
         registerEquipmentFactories(baseEquipmentRepository);
         registerEffectsFactories();
-    
+        
         baseConfiguration.initialize();
-    
+        
         registerListeners(Bukkit.getPluginManager(), baseEquipmentRepository);
         scheduleTasks(baseConfiguration);
         registerCommands(baseConfiguration, baseEquipmentRepository);
@@ -47,14 +52,18 @@ public final class EquipmentEffects extends JavaPlugin {
     
     }
     
-    private void registerCommands(BaseConfiguration baseConfiguration, BaseEquipmentRepository baseEquipmentRepository){
-        getCommand("equipmenteffectsadmin").setExecutor(new EquipmentEffectsAdminCommand(baseConfiguration,
-                baseEquipmentRepository));
+    private void registerCommands(BaseConfiguration baseConfiguration, BaseEquipmentRepository baseEquipmentRepository
+    ) {
+        
+        getCommand("equipmenteffectsadmin").setExecutor(
+                new EquipmentEffectsAdminCommand(baseConfiguration, baseEquipmentRepository));
     }
     
-    private void scheduleTasks(BaseConfiguration baseConfiguration){
-        new UpdatePlayerEffectsTask(baseConfiguration, this).runTaskTimer(this, 100,
-                baseConfiguration.getTaskScheduleTimeTicks());
+    private void scheduleTasks(BaseConfiguration baseConfiguration) {
+        
+        new UpdatePlayerEffectsTask(baseConfiguration, this, basePlayerRepository).runTaskTimer(this, 100,
+                baseConfiguration.getTaskScheduleTimeTicks()
+        );
     }
     
     private void registerListeners(PluginManager pluginManager, BaseEquipmentRepository baseEquipmentRepository) {

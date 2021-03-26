@@ -2,16 +2,17 @@ package com.ignitedev.devsequipmenteffects.task;
 
 import com.google.common.collect.Lists;
 import com.ignitedev.devsequipmenteffects.EquipmentEffects;
-import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.BaseEquipmentFactory;
+import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
+import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
     
     private final BaseConfiguration baseConfiguration;
     private final EquipmentEffects equipmentEffects;
+    private final BasePlayerRepository basePlayerRepository;
     
     private int cycle = -1;
     
@@ -69,7 +71,12 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
         
         for (Player player : players) {
             
+            BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
+            
+            Validate.notNull(basePlayer, "Base Player is null, Check your console for possible exception ");
+            
             if (!player.isOnline()) {
+                basePlayer.getActiveBaseEffects().clear();
                 continue;
             }
             
@@ -81,28 +88,10 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
             List<BaseEquipment> baseEquipments = defaultFactory.convertToBaseEquipments(
                     Arrays.asList(inventory.getContents()));
             
+            basePlayer.getActiveBaseEffects()
+                    .forEach(potionEffect -> player.removePotionEffect(potionEffect.getPotionEffectType()));
             
             if (!baseEquipments.isEmpty()) {
-                
-                // todo optimize this, store data inside player object
-                
-                List<PotionEffectType> activePotionEffects = new ArrayList<>();
-    
-                for (BaseEquipment baseEquipment : baseEquipments) {
-                    for (BaseEffect baseEffect : baseEquipment.getEffectList()) {
-                        activePotionEffects.add(baseEffect.getPotionEffectType());
-                    }
-                }
-                
-                player.getActivePotionEffects().forEach(potionEffect -> {
-                    PotionEffectType type = potionEffect.getType();
-                    
-                    if(!activePotionEffects.contains(type)) {
-                        player.removePotionEffect(type);
-                    }
-                });
-                
-                // end of todo
                 
                 iteratePlayerItems(player, itemInMainHand, itemInOffHand, baseEquipments);
             }

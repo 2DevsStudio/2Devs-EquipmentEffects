@@ -30,7 +30,7 @@ public class WearArmorListener implements Listener {
             return; // worn item is not in base equipment cache, that means that it is not effect item
         }
         
-        if(!baseEquipmentByItemStack.isMustWear()){
+        if (!baseEquipmentByItemStack.isMustWear()) {
             return; // player don't have to wear item to make effects work
         }
         
