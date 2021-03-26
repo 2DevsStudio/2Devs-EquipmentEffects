@@ -4,6 +4,7 @@ import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.interfaces.Repository;
 import lombok.Data;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -21,6 +22,16 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
     public @Nullable BaseEquipment findById(String identifier) {
         
         return baseEquipmentCache.get(identifier);
+    }
+    
+    public @Nullable BaseEquipment findByItemStack(ItemStack itemStack) {
+        
+        for (BaseEquipment value : baseEquipmentCache.values()) {
+            if (value.getItemStack().isSimilar(itemStack)) {
+                return value;
+            }
+        }
+        return null;
     }
     
     public List<BaseEquipment> findAllByMaterial(Material material) {
