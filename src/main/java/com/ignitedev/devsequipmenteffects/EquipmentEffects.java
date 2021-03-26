@@ -5,6 +5,7 @@ import com.ignitedev.devsequipmenteffects.base.effect.factory.DefaultBaseEffectF
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.BaseEquipmentFactories;
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.DefaultBaseEquipmentFactory;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
+import com.ignitedev.devsequipmenteffects.command.EquipmentEffectsAdminCommand;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.listeners.ArmorTakeOffListener;
 import com.ignitedev.devsequipmenteffects.listeners.WearArmorListener;
@@ -38,11 +39,16 @@ public final class EquipmentEffects extends JavaPlugin {
         
         registerListeners(Bukkit.getPluginManager(), baseEquipmentRepository);
         scheduleTasks(baseConfiguration);
+        registerCommands(baseConfiguration, baseEquipmentRepository);
     }
     
     @Override
     public void onDisable() {
     
+    }
+    
+    private void registerCommands(BaseConfiguration baseConfiguration, BaseEquipmentRepository baseEquipmentRepository){
+        getCommand("EquipmentEffectsAdmin").setExecutor(new EquipmentEffectsAdminCommand(baseConfiguration, baseEquipmentRepository));
     }
     
     private void scheduleTasks(BaseConfiguration baseConfiguration){

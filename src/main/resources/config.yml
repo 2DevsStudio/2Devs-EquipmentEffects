@@ -46,3 +46,7 @@ effect-items:
         ==: ItemMeta
         meta-type: UNSPECIFIC
         display-name: "Gladiator Boots"
+
+
+messages:
+  admin-command-usage: "Usage of admin command: /EEA give <id>"

@@ -4,3 +4,8 @@ main: com.ignitedev.devsequipmenteffects.EquipmentEffects
 api-version: 1.16
 authors: [ IgniteDEV, 2DevsStudio ]
 description: Equipment effects plugin by 2DevsStudio
+commands:
+  EquipmentEffectsAdmin:
+    aliases: [EEA, EquipmentEffectsA, EquipmentEA, EEffectsAdmin, EEadmin]
+    permission: equipmenteffects.admin
+    description: admin command

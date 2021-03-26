@@ -23,10 +23,14 @@ public class BaseConfiguration {
     private int taskScheduleTimeTicks;
     private int updatePartitionsAmount;
     
+    private String adminCommandUsage;
+    
     public void initialize() {
         
         taskScheduleTimeTicks = fileConfiguration.getInt("task-schedule-time");
         updatePartitionsAmount = fileConfiguration.getInt("update-partitions-amount");
+        
+        adminCommandUsage = fileConfiguration.getString("admin-command-usage");
         
         loadEffectItems();
     }
