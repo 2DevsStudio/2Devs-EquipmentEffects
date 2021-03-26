@@ -34,7 +34,7 @@ public class WearArmorListener implements Listener {
             return; // player don't have to wear item to make effects work
         }
         
-        baseEquipmentByItemStack.getEffectList().forEach(baseEffect -> baseEffect.unApply(player));
+        baseEquipmentByItemStack.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
     }
     
 }

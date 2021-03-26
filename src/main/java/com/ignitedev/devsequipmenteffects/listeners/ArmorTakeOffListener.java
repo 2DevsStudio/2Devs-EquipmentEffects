@@ -30,7 +30,7 @@ public class ArmorTakeOffListener implements Listener {
             return; // worn item is not in base equipment cache, that means that it is not effect item
         }
         
-        baseEquipmentByItemStack.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
+        baseEquipmentByItemStack.getEffectList().forEach(baseEffect -> baseEffect.unApply(player));
     }
     
 }
