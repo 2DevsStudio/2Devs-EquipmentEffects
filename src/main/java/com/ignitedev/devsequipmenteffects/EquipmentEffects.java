@@ -30,13 +30,13 @@ public final class EquipmentEffects extends JavaPlugin {
         
         BaseEquipmentRepository baseEquipmentRepository = new BaseEquipmentRepository();
         FileConfiguration config = getConfig();
-        BaseConfiguration baseConfiguration = new BaseConfiguration(config, baseEquipmentRepository);
+        BaseConfiguration baseConfiguration = new BaseConfiguration(config, baseEquipmentRepository, this);
         
-        baseConfiguration.initialize();
-    
         registerEquipmentFactories(baseEquipmentRepository);
         registerEffectsFactories();
-        
+    
+        baseConfiguration.initialize();
+    
         registerListeners(Bukkit.getPluginManager(), baseEquipmentRepository);
         scheduleTasks(baseConfiguration);
         registerCommands(baseConfiguration, baseEquipmentRepository);
@@ -48,7 +48,8 @@ public final class EquipmentEffects extends JavaPlugin {
     }
     
     private void registerCommands(BaseConfiguration baseConfiguration, BaseEquipmentRepository baseEquipmentRepository){
-        getCommand("EquipmentEffectsAdmin").setExecutor(new EquipmentEffectsAdminCommand(baseConfiguration, baseEquipmentRepository));
+        getCommand("equipmenteffectsadmin").setExecutor(new EquipmentEffectsAdminCommand(baseConfiguration,
+                baseEquipmentRepository));
     }
     
     private void scheduleTasks(BaseConfiguration baseConfiguration){
