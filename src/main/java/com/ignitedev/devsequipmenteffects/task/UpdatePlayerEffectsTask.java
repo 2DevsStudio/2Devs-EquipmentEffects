@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -90,6 +91,7 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
             
             basePlayer.getActiveBaseEffects()
                     .forEach(potionEffect -> player.removePotionEffect(potionEffect.getPotionEffectType()));
+            basePlayer.getActiveBaseEffects().clear();
             
             if (!baseEquipments.isEmpty()) {
                 
@@ -117,12 +119,24 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
                     if (itemInMainHand.isSimilar(itemStack)) {
                         baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
                     }
-                } else if (baseEquipment.isMustHoldOffHand() && itemInOffHand.isSimilar(itemStack)) {
+                } else if (baseEquipment.isMustHoldOffHand()) {
                     if (itemInOffHand.isSimilar(itemStack)) {
                         baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
                     }
                 } else if (!baseEquipment.isMustWear()) {
                     baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
+                }
+            } else {
+                @NotNull ItemStack[] armorContents = player.getInventory().getArmorContents();
+                
+                for (ItemStack armorContent : armorContents) {
+    
+                    if(!armorContent.getType().isAir()) {
+                        if (armorContent.isSimilar(itemStack)) {
+                            baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
+                            break;
+                        }
+                    }
                 }
             }
         });
