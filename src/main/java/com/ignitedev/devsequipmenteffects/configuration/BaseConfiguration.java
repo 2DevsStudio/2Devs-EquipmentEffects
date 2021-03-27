@@ -16,7 +16,6 @@ import java.util.List;
 @Data
 public class BaseConfiguration {
     
-    private final FileConfiguration fileConfiguration;
     private final BaseEquipmentRepository baseEquipmentRepository;
     private final EquipmentEffects equipmentEffects;
     
@@ -25,24 +24,28 @@ public class BaseConfiguration {
     private int partitionMinimumPlayersMultiplier;
     
     private String adminCommandUsage;
+    private String reloadMessage;
     
-    public void initialize() {
+    public void initialize(FileConfiguration fileConfiguration) {
         
         partitionMinimumPlayersMultiplier = fileConfiguration.getInt("partition-minimum-players-multiplier");
         taskScheduleTimeTicks = fileConfiguration.getInt("task-schedule-time");
         updatePartitionsAmount = fileConfiguration.getInt("update-partitions-amount");
         
         adminCommandUsage = fileConfiguration.getString("messages.admin-command-usage");
+        reloadMessage = fileConfiguration.getString("messages.reload");
         
-        loadEffectItems();
+        loadEffectItems(fileConfiguration);
     }
     
-    private void loadEffectItems() {
+    private void loadEffectItems(FileConfiguration fileConfiguration) {
         
         BaseEffectFactory baseEffectFactory = equipmentEffects.baseEffectFactories.getDefaultFactory();
         ConfigurationSection configurationSection = fileConfiguration.getConfigurationSection("effect-items");
         
         Validate.notNull(configurationSection, "effect-items section is incorrect!");
+        
+        baseEquipmentRepository.getBaseEquipmentCache().clear();
         
         configurationSection.getKeys(false).forEach(key -> {
             String identifier = configurationSection.getString(key + ".id");

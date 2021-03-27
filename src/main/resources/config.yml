@@ -1,3 +1,6 @@
+# this is version of config, if it is different from plugin version that means that you have outdated config!
+config-version: ${project.version}
+
 # partition minimum players amount multiplier
 # that's multiplier of {update-partitions-amount}, if you have this value set to 4, and you use
 # default 2 multiplier, it will enable partitioning when you have at least 8 players, below this number
@@ -81,4 +84,5 @@ effect-items:
 
 
 messages:
-  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list"
+  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload"
+  reload: "Config got reloaded!"

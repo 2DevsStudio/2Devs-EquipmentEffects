@@ -1,5 +1,6 @@
 package com.ignitedev.devsequipmenteffects.command;
 
+import com.ignitedev.devsequipmenteffects.EquipmentEffects;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
@@ -16,6 +17,7 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
     
     private final BaseConfiguration baseConfiguration;
     private final BaseEquipmentRepository baseEquipmentRepository;
+    private final EquipmentEffects equipmentEffects;
     
     @Override
     public boolean onCommand(@NotNull CommandSender sender,
@@ -36,12 +38,17 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
             
             StringBuilder stringBuilder = new StringBuilder("Available: ");
-    
+            
             for (String identifier : baseEquipmentRepository.getBaseEquipmentCache().keySet()) {
                 stringBuilder.append(identifier).append("|");
             }
             
             sender.sendMessage(stringBuilder.toString());
+            return true;
+        } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            equipmentEffects.reloadConfig();
+            baseConfiguration.initialize(equipmentEffects.getConfig());
+            sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getReloadMessage()));
             return true;
         }
         
