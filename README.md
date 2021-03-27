@@ -15,21 +15,27 @@ This is a plugin that allows you to create equipment or held items which gives y
 
 ### Commands ###
 
-**TODO**
+- /EquipmentEffectsAdmin reload - To reload Configuration
+- /EquipmentEffectsAdmin list - To check list of created items
+- /EquipmentEffectsAdmin give {PLAYER} {ITEM_ID} - Give Item to player 
+- /EquipmentEffectsAdmin give {ITEM_ID} - Give Item
 
 ### Permissions ###
 
-**TODO**
+- /EquipmentEffectsAdmin - EquipmentEffects.admin
 
 ### Configuration ###
 
 ```yaml
+# this is version of config, if it is different from plugin version that means that you have outdated config!
+config-version: ${project.version}
+
 # partition minimum players amount multiplier
 # that's multiplier of {update-partitions-amount}, if you have this value set to 4, and you use
 # default 2 multiplier, it will enable partitioning when you have at least 8 players, below this number
 # it will update for all players at once
 #
-# 2 is minimum, otherwise it can throw an exception
+# 2 is minimum, otherwise it can throw an IllegalArgumentException
 partition-minimum-players-multiplier: 2
 
 # to how many partitions split player count
@@ -80,8 +86,34 @@ effect-items:
         ==: ItemMeta
         meta-type: UNSPECIFIC
         display-name: "Gladiator Boots"
+  2:
+    id: "GLADIATOR_BOOTS2"
+
+    name: "Gladiator Boots 2"
+
+    must-wear: true
+
+    must-hold-mainhand: false
+
+    must-hold-offhand: false
+
+    applicable-effects:
+      - "SPEED:2"
+      - "JUMP:2"
+      - "GLOWING:1"
+
+    itemstack:
+      ==: org.bukkit.inventory.ItemStack
+      v: 2230
+      type: DIAMOND_BOOTS
+      meta:
+        ==: ItemMeta
+        meta-type: UNSPECIFIC
+        display-name: "Gladiator Boots"
 
 
 messages:
-  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list"
+  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload"
+  reload: "Config got reloaded!"
+  no-permissions: "No Permissions!"
 ```
