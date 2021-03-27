@@ -25,6 +25,7 @@ public class BaseConfiguration {
     
     private String adminCommandUsage;
     private String reloadMessage;
+    private String noPermissions;
     
     public void initialize(FileConfiguration fileConfiguration) {
         
@@ -34,6 +35,7 @@ public class BaseConfiguration {
         
         adminCommandUsage = fileConfiguration.getString("messages.admin-command-usage");
         reloadMessage = fileConfiguration.getString("messages.reload");
+        noPermissions = fileConfiguration.getString("messages.no-permissions");
         
         loadEffectItems(fileConfiguration);
     }

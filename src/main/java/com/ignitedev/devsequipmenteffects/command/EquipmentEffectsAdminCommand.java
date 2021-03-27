@@ -26,6 +26,11 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
                              @NotNull String[] args
     ) {
         
+        if(!sender.hasPermission("EquipmentEffects.admin")){
+            sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getNoPermissions()));
+            return false;
+        }
+        
         if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             String identifier = args[1];
             
@@ -51,8 +56,6 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
             sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getReloadMessage()));
             return true;
         }
-        
-        
         sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getAdminCommandUsage()));
         return false;
     }

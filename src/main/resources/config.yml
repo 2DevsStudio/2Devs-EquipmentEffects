@@ -86,3 +86,4 @@ effect-items:
 messages:
   admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload"
   reload: "Config got reloaded!"
+  no-permissions: "No Permissions!"
