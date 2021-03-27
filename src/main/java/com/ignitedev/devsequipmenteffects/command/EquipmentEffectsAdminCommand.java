@@ -6,6 +6,7 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,11 +34,26 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         
         if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             String identifier = args[1];
-            
+    
             BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
-            
+    
             if (baseEquipmentById != null) {
                 ((Player) sender).getInventory().addItem(baseEquipmentById.getItemStack());
+                return true;
+            }
+        } else if(args.length == 3 && args[0].equalsIgnoreCase("give")){
+            Player target = Bukkit.getPlayer(args[1]);
+            
+            if(target == null){
+                return false;
+            }
+            
+            String identifier = args[2];
+    
+            BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
+    
+            if (baseEquipmentById != null) {
+                target.getInventory().addItem(baseEquipmentById.getItemStack());
                 return true;
             }
         } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
@@ -56,6 +72,7 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
             sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getReloadMessage()));
             return true;
         }
+        
         sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getAdminCommandUsage()));
         return false;
     }
