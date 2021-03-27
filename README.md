@@ -11,6 +11,7 @@ This is a plugin that allows you to create equipment or held items which gives y
 - Particles
 - Executing commands
 - NBT support
+- WorldGuard Support
 
 ### Commands ###
 
