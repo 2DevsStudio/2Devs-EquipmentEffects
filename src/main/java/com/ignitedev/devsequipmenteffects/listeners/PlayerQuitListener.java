@@ -19,7 +19,7 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
         BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
         
-        if(basePlayer == null){
+        if (basePlayer == null) {
             return;
         }
         

@@ -12,10 +12,9 @@ import java.util.UUID;
 @Data
 public class BasePlayer {
     
-    private transient Player player = null;
-    
     private final UUID uuid;
     private final List<BaseEffect> activeBaseEffects = new ArrayList<>();
+    private transient Player player = null;
     
     public void clearPlayerActiveEffects() {
         
