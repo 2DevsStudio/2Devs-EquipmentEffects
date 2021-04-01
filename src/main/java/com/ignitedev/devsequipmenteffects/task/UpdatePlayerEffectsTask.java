@@ -104,20 +104,17 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
     ) {
         
         baseEquipments.forEach(baseEquipment -> {
-            ItemStack itemStack = baseEquipment.getItemStack();
-            
             if (!baseEquipment.isMustWear()) {
                 if (baseEquipment.isMustHoldMainHand() && baseEquipment.isMustHoldOffHand()) {
-                    if (itemInMainHand.isSimilar(itemStack) || itemInOffHand.isSimilar(itemStack)) {
-                        
+                    if (baseEquipment.isSimilar(itemInMainHand) || baseEquipment.isSimilar(itemInOffHand)) {
                         baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
                     }
                 } else if (baseEquipment.isMustHoldMainHand()) {
-                    if (itemInMainHand.isSimilar(itemStack)) {
+                    if (baseEquipment.isSimilar(itemInMainHand)) {
                         baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
                     }
                 } else if (baseEquipment.isMustHoldOffHand()) {
-                    if (itemInOffHand.isSimilar(itemStack)) {
+                    if (baseEquipment.isSimilar(itemInOffHand)) {
                         baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
                     }
                 } else if (!baseEquipment.isMustWear()) {
@@ -128,7 +125,7 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
                 
                 for (ItemStack armorContent : armorContents) {
                     if (armorContent != null) {
-                        if (armorContent.isSimilar(itemStack)) {
+                        if (baseEquipment.isSimilar(armorContent)) {
                             baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
                             break;
                         }

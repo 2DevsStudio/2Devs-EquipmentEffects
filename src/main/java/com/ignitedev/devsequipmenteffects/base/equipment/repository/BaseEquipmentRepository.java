@@ -31,7 +31,7 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
         }
         
         for (BaseEquipment value : baseEquipmentCache.values()) {
-            if (value.getItemStack().isSimilar(itemStack)) {
+            if (value.isSimilar(itemStack)) {
                 return value;
             }
         }
