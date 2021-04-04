@@ -2,6 +2,7 @@ package com.ignitedev.devsequipmenteffects.base.equipment;
 
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
 import lombok.Data;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,11 +30,25 @@ public class BaseEquipment {
         Material type = itemStack.getType();
         Material targetType = targetItemStack.getType();
         
+        List<Component> lore = itemMeta.lore();
+        List<Component> targetLore = targetItemMeta.lore();
+        
+        Component displayName = itemMeta.displayName();
+        Component targetDisplayName = targetItemMeta.displayName();
+        
         if (type != targetType) {
             return false;
         }
         
-        if (!itemMeta.equals(targetItemMeta)) {
+        if (lore == null || displayName == null) {
+            return false;
+        }
+        
+        if (!lore.equals(targetLore)) {
+            return false;
+        }
+        
+        if (!displayName.equals(targetDisplayName)) {
             return false;
         }
         

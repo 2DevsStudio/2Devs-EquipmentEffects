@@ -47,6 +47,26 @@ effect-items:
     applicable-effects:
       - "SPEED:2"
 
+    # section for interactions on triggering with {must-wear} or {must-hold-mainhand} or {must-hold-offhand}
+    trigger-interactions:
+
+      # trigger on triggering enable for interaction ( example; holding item )
+      trigger-enable:
+
+        # command which will be executed
+        command:
+          - "say Trigger on"
+          - "say Test123"
+
+      # trigger on triggering disable for interaction ( example; un-holding item )
+      trigger-disable:
+
+        # command which will be executed
+        command:
+          - "say Trigger off"
+          - "say Test123"
+
+
     # itemstack for which effects will work(it don't have to be given by command, just similar itemstack
     # for more information about how this section work, go here: https://www.spigotmc.org/wiki/itemstack-serialization/
     itemstack:
@@ -57,31 +77,6 @@ effect-items:
         ==: ItemMeta
         meta-type: UNSPECIFIC
         display-name: "Gladiator Boots"
-  2:
-    id: "GLADIATOR_BOOTS2"
-
-    name: "Gladiator Boots 2"
-
-    must-wear: true
-
-    must-hold-mainhand: false
-
-    must-hold-offhand: false
-
-    applicable-effects:
-      - "SPEED:2"
-      - "JUMP:2"
-      - "GLOWING:1"
-
-    itemstack:
-      ==: org.bukkit.inventory.ItemStack
-      v: 2230
-      type: DIAMOND_BOOTS
-      meta:
-        ==: ItemMeta
-        meta-type: UNSPECIFIC
-        display-name: "Gladiator Boots"
-
 
 messages:
   admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload"
