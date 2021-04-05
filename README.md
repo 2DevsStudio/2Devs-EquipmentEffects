@@ -12,7 +12,6 @@ This is a plugin that allows you to create equipment or held items which gives y
 - Executing commands
 - NBT support
 - WorldGuard Support
-- One Item Per File(seperate files for each item)
 - Support for projectiles
 
 Note: Thanks to https://github.com/kawaii for all suggestions <3
