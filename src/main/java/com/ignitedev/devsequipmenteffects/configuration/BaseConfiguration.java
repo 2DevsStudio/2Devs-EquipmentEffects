@@ -6,11 +6,11 @@ import com.ignitedev.devsequipmenteffects.base.effect.factory.BaseEffectFactory;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
 import lombok.Data;
-import org.apache.commons.lang.Validate;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
 import java.util.List;
 
 @Data
@@ -27,6 +27,8 @@ public class BaseConfiguration {
     private String reloadMessage;
     private String noPermissions;
     
+    public File itemsDirectory;
+    
     public void initialize(FileConfiguration fileConfiguration) {
         
         partitionMinimumPlayersMultiplier = fileConfiguration.getInt("partition-minimum-players-multiplier");
@@ -37,41 +39,49 @@ public class BaseConfiguration {
         reloadMessage = fileConfiguration.getString("messages.reload");
         noPermissions = fileConfiguration.getString("messages.no-permissions");
         
-        loadEffectItems(fileConfiguration);
+        itemsDirectory = new File(equipmentEffects.getDataFolder(), "/Items");
+        
+        loadDefaultItem();
+        loadEffectItems();
     }
     
-    private void loadEffectItems(FileConfiguration fileConfiguration) {
+    private void loadDefaultItem() {
+        
+        File defaultItemFile = new File(itemsDirectory.getPath(), "default.yml");
+        
+        if (!defaultItemFile.exists()) {
+            equipmentEffects.saveResource("Items/default.yml", true);
+        }
+    }
+    
+    private void loadEffectItems() {
         
         BaseEffectFactory baseEffectFactory = equipmentEffects.baseEffectFactories.getDefaultFactory();
-        ConfigurationSection configurationSection = fileConfiguration.getConfigurationSection("effect-items");
-        
-        Validate.notNull(configurationSection, "effect-items section is incorrect!");
-        
+        File[] files = itemsDirectory.listFiles();
         baseEquipmentRepository.getBaseEquipmentCache().clear();
         
-        configurationSection.getKeys(false).forEach(key -> {
-            String identifier = configurationSection.getString(key + ".id");
+        for (File file : files) {
+            YamlConfiguration fileYaml = YamlConfiguration.loadConfiguration(file);
+            
+            String identifier = fileYaml.getString("id");
             
             if (baseEquipmentRepository.findById(identifier) != null) {
                 baseEquipmentRepository.remove(identifier);
             }
             
-            String name = configurationSection.getString(key + ".name");
-            boolean mustWear = configurationSection.getBoolean(key + ".must-wear");
-            boolean mustHoldMainHand = configurationSection.getBoolean(key + ".must-hold-mainhand");
-            boolean mustHoldOffHand = configurationSection.getBoolean(key + ".must-hold-offhand");
+            String name = fileYaml.getString("name");
+            boolean mustWear = fileYaml.getBoolean("must-wear");
+            boolean mustHoldMainHand = fileYaml.getBoolean("must-hold-mainhand");
+            boolean mustHoldOffHand = fileYaml.getBoolean("must-hold-offhand");
             List<BaseEffect> applicableEffects = baseEffectFactory.convertToBaseEffects(
-                    configurationSection.getStringList(key + ".applicable-effects"));
-            ItemStack itemStack = configurationSection.getItemStack(key + ".itemstack");
+                    fileYaml.getStringList("applicable-effects"));
+            ItemStack itemStack = fileYaml.getItemStack("itemstack");
             
             
             baseEquipmentRepository.add(
                     new BaseEquipment(identifier, name, mustWear, mustHoldMainHand, mustHoldOffHand, applicableEffects,
                             itemStack
                     ));
-        });
-        
-        
+        }
     }
-    
 }
