@@ -19,11 +19,7 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
         BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
         
-        if (basePlayer == null) {
-            return;
-        }
-        
-        basePlayer.clearPlayerActiveEffects();
+        basePlayer.clearPlayerActiveEquipment();
     }
     
 }

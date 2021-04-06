@@ -3,7 +3,7 @@ package com.ignitedev.devsequipmenteffects.base.player.repository;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.interfaces.Repository;
 import lombok.Data;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 import java.util.UUID;
@@ -15,7 +15,7 @@ public class BasePlayerRepository implements Repository<BasePlayer> {
     private final Map<String, BasePlayer> basePlayerCache = new ConcurrentHashMap<>();
     
     @Override
-    public @Nullable BasePlayer findById(String identifier) {
+    public @NotNull BasePlayer findById(String identifier) {
         
         BasePlayer basePlayer = basePlayerCache.get(identifier);
         

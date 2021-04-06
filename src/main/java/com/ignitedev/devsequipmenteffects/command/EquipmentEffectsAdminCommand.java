@@ -27,31 +27,31 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
                              @NotNull String[] args
     ) {
         
-        if(!sender.hasPermission("EquipmentEffects.admin")){
+        if (!sender.hasPermission("EquipmentEffects.admin")) {
             sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getNoPermissions()));
             return false;
         }
         
         if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
             String identifier = args[1];
-    
+            
             BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
-    
+            
             if (baseEquipmentById != null) {
                 ((Player) sender).getInventory().addItem(baseEquipmentById.getItemStack());
                 return true;
             }
-        } else if(args.length == 3 && args[0].equalsIgnoreCase("give")){
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("give")) {
             Player target = Bukkit.getPlayer(args[1]);
             
-            if(target == null){
+            if (target == null) {
                 return false;
             }
             
             String identifier = args[2];
-    
+            
             BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
-    
+            
             if (baseEquipmentById != null) {
                 target.getInventory().addItem(baseEquipmentById.getItemStack());
                 return true;

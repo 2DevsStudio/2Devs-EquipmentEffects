@@ -18,28 +18,11 @@ public class BaseEffect implements Applicable {
     @Override
     public void apply(Player player) {
         
-        String identifier = player.getUniqueId().toString();
-        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(identifier);
-        
-        if (basePlayer == null) {
-            return; // never happen
-        }
-        
-        basePlayer.getActiveBaseEffects().add(this);
         player.addPotionEffect(getPotionEffect());
     }
     
     @Override
     public void unApply(Player player) {
-        
-        String identifier = player.getUniqueId().toString();
-        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(identifier);
-        
-        if (basePlayer == null) {
-            return; // never happen
-        }
-        
-        basePlayer.getActiveBaseEffects().remove(this);
         
         player.removePotionEffect(potionEffectType);
     }

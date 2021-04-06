@@ -1,16 +1,20 @@
 package com.ignitedev.devsequipmenteffects.base.equipment;
 
+import com.ignitedev.devsequipmenteffects.EquipmentEffects;
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
+import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
+import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
 import lombok.Data;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
 @Data
-public class BaseEquipment {
+public class BaseEquipment implements Applicable {
     
     private final String identifier;
     private final String name;
@@ -57,5 +61,27 @@ public class BaseEquipment {
         }
         
         return itemStack.getItemFlags().equals(targetItemStack.getItemFlags());
+    }
+    
+    @Override
+    public void apply(Player player) {
+        
+        String identifier = player.getUniqueId().toString();
+        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(identifier);
+        
+        basePlayer.getActiveEquipment().add(this);
+        
+        getEffectList().forEach(baseEffect -> baseEffect.apply(player));
+    }
+    
+    @Override
+    public void unApply(Player player) {
+        
+        String identifier = player.getUniqueId().toString();
+        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(identifier);
+        
+        basePlayer.getActiveEquipment().remove(this);
+        
+        getEffectList().forEach(baseEffect -> baseEffect.unApply(player));
     }
 }

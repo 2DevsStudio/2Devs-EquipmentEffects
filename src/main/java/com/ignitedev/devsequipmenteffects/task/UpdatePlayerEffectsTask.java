@@ -52,7 +52,7 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
                 // if player amount is lower than (partition amount * multiplier), update inventories instantly for
                 // everyone at the same time
                 
-                iterateThroughPlayers(defaultFactory, new ArrayList<>(onlinePlayersList));
+                iterateThroughPlayers(new ArrayList<>(onlinePlayersList));
                 return;
             }
             
@@ -62,76 +62,18 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
                     onlinePlayersList, onlinePlayersList.size() / baseConfiguration.getUpdatePartitionsAmount());
         }
         
-        iterateThroughPlayers(defaultFactory, partitions.get(cycle));
+        iterateThroughPlayers(partitions.get(cycle));
         
         cycle = cycle - 1;
     }
     
-    private void iterateThroughPlayers(BaseEquipmentFactory defaultFactory, List<Player> players) {
+    private void iterateThroughPlayers(List<Player> players) {
         
         for (Player player : players) {
             
             BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
             
-            Validate.notNull(basePlayer, "Base Player is null, Check your console for possible exception ");
-            
-            if (!player.isOnline()) {
-                basePlayer.clearPlayerActiveEffects();
-                continue;
-            }
-            
-            PlayerInventory inventory = player.getInventory();
-            ItemStack itemInMainHand = inventory.getItemInMainHand();
-            ItemStack itemInOffHand = inventory.getItemInOffHand();
-            
-            // convert player items to base equipment list
-            List<BaseEquipment> baseEquipments = defaultFactory.convertToBaseEquipments(
-                    Arrays.asList(inventory.getContents()));
-            
-            basePlayer.clearPlayerActiveEffects();
-            
-            if (!baseEquipments.isEmpty()) {
-                
-                iteratePlayerItems(player, itemInMainHand, itemInOffHand, baseEquipments);
-            }
+            basePlayer.updatePlayerActiveEffects();
         }
-    }
-    
-    private void iteratePlayerItems(Player player,
-                                    ItemStack itemInMainHand,
-                                    ItemStack itemInOffHand,
-                                    List<BaseEquipment> baseEquipments
-    ) {
-        
-        baseEquipments.forEach(baseEquipment -> {
-            if (!baseEquipment.isMustWear()) {
-                if (baseEquipment.isMustHoldMainHand() && baseEquipment.isMustHoldOffHand()) {
-                    if (baseEquipment.isSimilar(itemInMainHand) || baseEquipment.isSimilar(itemInOffHand)) {
-                        baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
-                    }
-                } else if (baseEquipment.isMustHoldMainHand()) {
-                    if (baseEquipment.isSimilar(itemInMainHand)) {
-                        baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
-                    }
-                } else if (baseEquipment.isMustHoldOffHand()) {
-                    if (baseEquipment.isSimilar(itemInOffHand)) {
-                        baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
-                    }
-                } else if (!baseEquipment.isMustWear()) {
-                    baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
-                }
-            } else {
-                ItemStack[] armorContents = player.getInventory().getArmorContents();
-                
-                for (ItemStack armorContent : armorContents) {
-                    if (armorContent != null) {
-                        if (baseEquipment.isSimilar(armorContent)) {
-                            baseEquipment.getEffectList().forEach(baseEffect -> baseEffect.apply(player));
-                            break;
-                        }
-                    }
-                }
-            }
-        });
     }
 }
