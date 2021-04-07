@@ -14,6 +14,7 @@ This is a plugin that allows you to create equipment or held items which gives y
 - WorldGuard Support
 - Support for projectiles
 - Command to create items in-game
+- Auto completion
 
 Note: Thanks to https://github.com/kawaii for all suggestions <3
 
