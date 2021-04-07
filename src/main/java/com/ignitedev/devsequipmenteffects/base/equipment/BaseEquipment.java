@@ -27,7 +27,14 @@ public class BaseEquipment implements Applicable {
     
     private final ItemStack itemStack;
     
+    /*
+     * this method needs checks if item have meta, lore etc
+     */
     public boolean isSimilar(ItemStack targetItemStack) {
+        
+        if (targetItemStack == null || targetItemStack.getType().isAir()) {
+            return false;
+        }
         
         ItemMeta itemMeta = itemStack.getItemMeta();
         ItemMeta targetItemMeta = targetItemStack.getItemMeta();
@@ -66,8 +73,8 @@ public class BaseEquipment implements Applicable {
     @Override
     public void apply(Player player) {
         
-        String identifier = player.getUniqueId().toString();
-        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(identifier);
+        String playerUUID = player.getUniqueId().toString();
+        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(playerUUID);
         
         basePlayer.getActiveEquipment().add(this);
         
@@ -77,8 +84,8 @@ public class BaseEquipment implements Applicable {
     @Override
     public void unApply(Player player) {
         
-        String identifier = player.getUniqueId().toString();
-        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(identifier);
+        String playerUUID = player.getUniqueId().toString();
+        BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(playerUUID);
         
         basePlayer.getActiveEquipment().remove(this);
         

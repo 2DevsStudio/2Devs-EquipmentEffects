@@ -19,10 +19,10 @@ public class BaseUtil {
         return LegacyComponentSerializer.legacyAmpersand().deserialize(toColor).asComponent();
     }
     
-    public static List<BaseEquipment> findPlayerBaseEquipment(Player player,
-                                                              ItemStack itemInMainHand,
-                                                              ItemStack itemInOffHand,
-                                                              List<BaseEquipment> baseEquipments
+    public static List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
+                                                                        ItemStack itemInMainHand,
+                                                                        ItemStack itemInOffHand,
+                                                                        List<BaseEquipment> baseEquipments
     ) {
         
         List<BaseEquipment> appliedBaseEquipment = new ArrayList<>();
@@ -31,17 +31,22 @@ public class BaseUtil {
             
             boolean shouldApply = false;
             
+            if (baseEquipment == null) {
+                return;
+            }
+            
             if (!baseEquipment.isMustWear()) {
                 if (baseEquipment.isMustHoldMainHand() && baseEquipment.isMustHoldOffHand()) {
-                    if (baseEquipment.isSimilar(itemInMainHand) || baseEquipment.isSimilar(itemInOffHand)) {
+                    if ((itemInMainHand != null && baseEquipment.isSimilar(itemInMainHand)) ||
+                        (itemInOffHand != null && baseEquipment.isSimilar(itemInOffHand))) {
                         shouldApply = true;
                     }
                 } else if (baseEquipment.isMustHoldMainHand()) {
-                    if (baseEquipment.isSimilar(itemInMainHand)) {
+                    if (itemInMainHand != null && baseEquipment.isSimilar(itemInMainHand)) {
                         shouldApply = true;
                     }
                 } else if (baseEquipment.isMustHoldOffHand()) {
-                    if (baseEquipment.isSimilar(itemInOffHand)) {
+                    if (itemInOffHand != null && baseEquipment.isSimilar(itemInOffHand)) {
                         shouldApply = true;
                     }
                 } else if (!baseEquipment.isMustWear()) {

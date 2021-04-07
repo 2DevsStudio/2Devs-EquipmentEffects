@@ -18,16 +18,13 @@ public class BaseConfiguration {
     
     private final BaseEquipmentRepository baseEquipmentRepository;
     private final EquipmentEffects equipmentEffects;
-    
+    public File itemsDirectory;
     private int taskScheduleTimeTicks;
     private int updatePartitionsAmount;
     private int partitionMinimumPlayersMultiplier;
-    
     private String adminCommandUsage;
     private String reloadMessage;
     private String noPermissions;
-    
-    public File itemsDirectory;
     
     public void initialize(FileConfiguration fileConfiguration) {
         

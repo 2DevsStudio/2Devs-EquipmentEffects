@@ -2,7 +2,6 @@ package com.ignitedev.devsequipmenteffects.base.effect;
 
 import com.ignitedev.devsequipmenteffects.EquipmentEffects;
 import com.ignitedev.devsequipmenteffects.base.effect.factory.BaseEffectFactory;
-import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
 import lombok.Data;
 import org.bukkit.entity.Player;

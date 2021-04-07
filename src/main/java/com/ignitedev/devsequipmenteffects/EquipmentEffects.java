@@ -77,7 +77,7 @@ public final class EquipmentEffects extends JavaPlugin {
     
     private void scheduleTasks(BaseConfiguration baseConfiguration) {
         
-        new UpdatePlayerEffectsTask(baseConfiguration, this, basePlayerRepository).runTaskTimer(this, 100,
+        new UpdatePlayerEffectsTask(baseConfiguration, basePlayerRepository).runTaskTimer(this, 100,
                 baseConfiguration.getTaskScheduleTimeTicks()
         );
     }

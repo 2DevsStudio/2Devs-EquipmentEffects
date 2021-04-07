@@ -1,29 +1,21 @@
 package com.ignitedev.devsequipmenteffects.task;
 
 import com.google.common.collect.Lists;
-import com.ignitedev.devsequipmenteffects.EquipmentEffects;
-import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
-import com.ignitedev.devsequipmenteffects.base.equipment.factory.BaseEquipmentFactory;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
 public class UpdatePlayerEffectsTask extends BukkitRunnable {
     
     private final BaseConfiguration baseConfiguration;
-    private final EquipmentEffects equipmentEffects;
     private final BasePlayerRepository basePlayerRepository;
     
     private int cycle = -1;
@@ -32,8 +24,6 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
     
     @Override
     public void run() {
-        
-        BaseEquipmentFactory defaultFactory = equipmentEffects.baseEquipmentFactories.getDefaultFactory();
         
         if (cycle == -1) {
             // we don't want to skip index 0, so we reset on cycle -1

@@ -1,7 +1,6 @@
 package com.ignitedev.devsequipmenteffects.base.player;
 
 import com.ignitedev.devsequipmenteffects.EquipmentEffects;
-import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.BaseEquipmentFactory;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
@@ -25,12 +24,8 @@ public class BasePlayer {
     
     public void clearPlayerActiveEquipment() {
         
-        Player player = getPlayer();
-        
-        if (player != null) {
-            getActiveEquipment().forEach(baseEquipment -> {
-                baseEquipment.unApply(player);
-            });
+        if (getPlayer() != null) {
+            getActiveEquipment().forEach(baseEquipment -> baseEquipment.unApply(getPlayer()));
         }
         
         activeEquipment.clear();
@@ -47,7 +42,7 @@ public class BasePlayer {
     
     public void updatePlayerActiveEffects() {
         
-        if (!player.isOnline()) {
+        if (getPlayer() == null) {
             return;
         }
         
@@ -63,7 +58,7 @@ public class BasePlayer {
         
         if (!baseEquipments.isEmpty()) {
             
-            List<BaseEquipment> equipmentToApply = BaseUtil.findPlayerBaseEquipment(
+            List<BaseEquipment> equipmentToApply = BaseUtil.findPlayerApplicableBaseEquipment(
                     player, itemInMainHand, itemInOffHand, baseEquipments);
             
             // get equipment to unapply
@@ -73,9 +68,7 @@ public class BasePlayer {
                 }
             });
             
-            equipmentToApply.forEach(baseEquipment -> {
-                baseEquipment.apply(player);
-            });
+            equipmentToApply.forEach(baseEquipment -> baseEquipment.apply(player));
         }
     }
     
