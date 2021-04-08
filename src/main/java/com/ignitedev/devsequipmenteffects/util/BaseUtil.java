@@ -20,12 +20,13 @@ public class BaseUtil {
     }
     
     public static List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
-                                                                        ItemStack itemInMainHand,
-                                                                        ItemStack itemInOffHand,
                                                                         List<BaseEquipment> baseEquipments
     ) {
         
         List<BaseEquipment> appliedBaseEquipment = new ArrayList<>();
+        
+        ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
+        ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
         
         baseEquipments.forEach(baseEquipment -> {
             
@@ -37,16 +38,15 @@ public class BaseUtil {
             
             if (!baseEquipment.isMustWear()) {
                 if (baseEquipment.isMustHoldMainHand() && baseEquipment.isMustHoldOffHand()) {
-                    if ((itemInMainHand != null && baseEquipment.isSimilar(itemInMainHand)) ||
-                        (itemInOffHand != null && baseEquipment.isSimilar(itemInOffHand))) {
+                    if (baseEquipment.isSimilar(itemInMainHand) || baseEquipment.isSimilar(itemInOffHand)) {
                         shouldApply = true;
                     }
                 } else if (baseEquipment.isMustHoldMainHand()) {
-                    if (itemInMainHand != null && baseEquipment.isSimilar(itemInMainHand)) {
+                    if (baseEquipment.isSimilar(itemInMainHand)) {
                         shouldApply = true;
                     }
                 } else if (baseEquipment.isMustHoldOffHand()) {
-                    if (itemInOffHand != null && baseEquipment.isSimilar(itemInOffHand)) {
+                    if (baseEquipment.isSimilar(itemInOffHand)) {
                         shouldApply = true;
                     }
                 } else if (!baseEquipment.isMustWear()) {

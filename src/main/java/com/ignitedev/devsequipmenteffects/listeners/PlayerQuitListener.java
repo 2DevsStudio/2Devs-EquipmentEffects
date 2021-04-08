@@ -20,6 +20,7 @@ public class PlayerQuitListener implements Listener {
         BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
         
         basePlayer.clearPlayerActiveEquipment();
+        basePlayerRepository.remove(player.getUniqueId().toString());
     }
     
 }

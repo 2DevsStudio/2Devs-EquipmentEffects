@@ -25,7 +25,9 @@ public class BasePlayer {
     public void clearPlayerActiveEquipment() {
         
         if (getPlayer() != null) {
-            getActiveEquipment().forEach(baseEquipment -> baseEquipment.unApply(getPlayer()));
+            List<BaseEquipment> equipmentToUnapply = new ArrayList<>(getActiveEquipment());
+            
+            equipmentToUnapply.forEach(baseEquipment -> baseEquipment.unApply(getPlayer()));
         }
         
         activeEquipment.clear();
@@ -48,27 +50,27 @@ public class BasePlayer {
         
         BaseEquipmentFactory defaultFactory = EquipmentEffects.INSTANCE.baseEquipmentFactories.getDefaultFactory();
         
-        PlayerInventory inventory = player.getInventory();
-        ItemStack itemInMainHand = inventory.getItemInMainHand();
-        ItemStack itemInOffHand = inventory.getItemInOffHand();
-        
         // convert player items to base equipment list
         List<BaseEquipment> baseEquipments = defaultFactory.convertToBaseEquipments(
-                Arrays.asList(inventory.getContents()));
+                Arrays.asList(player.getInventory().getContents()));
         
         if (!baseEquipments.isEmpty()) {
             
-            List<BaseEquipment> equipmentToApply = BaseUtil.findPlayerApplicableBaseEquipment(
-                    player, itemInMainHand, itemInOffHand, baseEquipments);
+            List<BaseEquipment> equipmentToApply = BaseUtil.findPlayerApplicableBaseEquipment(player, baseEquipments);
+            
+            List<BaseEquipment> equipmentToUnapply = new ArrayList<>();
             
             // get equipment to unapply
             getActiveEquipment().forEach(baseEquipment -> {
                 if (!equipmentToApply.contains(baseEquipment)) {
-                    baseEquipment.unApply(player);
+                    equipmentToUnapply.add(baseEquipment);
                 }
             });
             
-            equipmentToApply.forEach(baseEquipment -> baseEquipment.apply(player));
+            equipmentToUnapply.forEach(baseEquipment -> baseEquipment.unApply(player));
+            equipmentToApply.forEach(baseEquipment -> {
+                baseEquipment.apply(player);
+            });
         }
     }
     
