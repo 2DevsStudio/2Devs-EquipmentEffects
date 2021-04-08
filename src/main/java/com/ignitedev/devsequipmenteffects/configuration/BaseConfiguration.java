@@ -2,6 +2,7 @@ package com.ignitedev.devsequipmenteffects.configuration;
 
 import com.ignitedev.devsequipmenteffects.EquipmentEffects;
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
+import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.effect.factory.BaseEffectFactory;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
@@ -74,10 +75,16 @@ public class BaseConfiguration {
                     fileYaml.getStringList("applicable-effects"));
             ItemStack itemStack = fileYaml.getItemStack("itemstack");
             
+            // triggers
+            
+            List<String> enableCommands = fileYaml.getStringList("trigger-interactions.trigger-enable.command");
+            List<String> disableCommands = fileYaml.getStringList("trigger-interactions.trigger-disable.command");
+            
+            BaseTrigger baseTrigger = new BaseTrigger(enableCommands, disableCommands);
             
             baseEquipmentRepository.add(
                     new BaseEquipment(identifier, name, mustWear, mustHoldMainHand, mustHoldOffHand, applicableEffects,
-                            itemStack
+                            baseTrigger, itemStack
                     ));
         }
     }

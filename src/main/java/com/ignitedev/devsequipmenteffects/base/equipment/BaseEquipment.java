@@ -2,6 +2,7 @@ package com.ignitedev.devsequipmenteffects.base.equipment;
 
 import com.ignitedev.devsequipmenteffects.EquipmentEffects;
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
+import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
 import lombok.Data;
@@ -26,6 +27,7 @@ public class BaseEquipment implements Applicable {
     private final boolean mustHoldOffHand;
     
     private final List<BaseEffect> effectList;
+    private final BaseTrigger baseTrigger;
     
     private final ItemStack itemStack;
     
@@ -61,6 +63,7 @@ public class BaseEquipment implements Applicable {
         
         basePlayer.getActiveEquipment().add(this);
         
+        getBaseTrigger().apply(player);
         getEffectList().forEach(baseEffect -> baseEffect.apply(player));
     }
     
@@ -72,6 +75,7 @@ public class BaseEquipment implements Applicable {
         
         basePlayer.getActiveEquipment().remove(this);
         
+        getBaseTrigger().unApply(player);
         getEffectList().forEach(baseEffect -> baseEffect.unApply(player));
     }
 }

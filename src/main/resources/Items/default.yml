@@ -31,12 +31,15 @@ applicable-effects:
 # section for interactions on triggering with {must-wear} or {must-hold-mainhand} or {must-hold-offhand}
 trigger-interactions:
 
+  # placeholders:
+  # %player% -> Nickname of executing player
+
   # trigger on triggering enable for interaction ( example; holding item )
   trigger-enable:
 
     # command which will be executed
     command:
-      - "say Trigger on"
+      - "say Trigger on for %player%"
       - "say Test123"
 
   # trigger on triggering disable for interaction ( example; un-holding item )

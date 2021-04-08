@@ -2,7 +2,6 @@ package com.ignitedev.devsequipmenteffects.base.effect.factory;
 
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
 import org.apache.commons.lang.Validate;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -33,11 +32,5 @@ public class DefaultBaseEffectFactory implements BaseEffectFactory {
         }
         
         return effectList;
-    }
-    
-    @Override
-    public PotionEffect convertToPotionEffect(BaseEffect baseEffect) {
-        
-        return new PotionEffect(baseEffect.getPotionEffectType(), Integer.MAX_VALUE, baseEffect.getAmplifier());
     }
 }

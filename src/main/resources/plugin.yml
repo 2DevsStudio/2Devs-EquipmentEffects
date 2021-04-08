@@ -6,5 +6,5 @@ authors: [ IgniteDEV, 2DevsStudio ]
 description: Equipment effects plugin by 2DevsStudio
 commands:
   equipmenteffectsadmin:
-    aliases: [eea, equipmenteffectsa, equipmentea, eeffectsadmin, eeadmin]
+    aliases: [ eea, equipmenteffectsa, equipmentea, eeffectsadmin, eeadmin ]
     description: admin command

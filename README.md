@@ -1,9 +1,11 @@
 # 2Devs Equipment Effects #
+
 # Work in progress ;)
 
 ### Description ###
 
-This is a plugin that allows you to create equipment or held items which gives you potion effects, permissions, particles or execute commands :)
+This is a plugin that allows you to create equipment or held items which gives you potion effects, permissions,
+particles or execute commands :)
 
 ### Todo List ###
 
@@ -22,13 +24,12 @@ Note: Thanks to https://github.com/kawaii for all suggestions <3
 
 - /EquipmentEffectsAdmin reload - To reload Configuration
 - /EquipmentEffectsAdmin list - To check list of created items
-- /EquipmentEffectsAdmin give {PLAYER} {ITEM_ID} - Give Item to player 
+- /EquipmentEffectsAdmin give {PLAYER} {ITEM_ID} - Give Item to player
 - /EquipmentEffectsAdmin give {ITEM_ID} - Give Item
 
 ### Permissions ###
 
 - /EquipmentEffectsAdmin - EquipmentEffects.admin
-
 
 ### Item Configuration ###
 
