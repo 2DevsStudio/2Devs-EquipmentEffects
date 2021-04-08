@@ -61,9 +61,10 @@ public class BaseEquipment implements Applicable {
         String playerUUID = player.getUniqueId().toString();
         BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(playerUUID);
         
-        basePlayer.getActiveEquipment().add(this);
-        
         getBaseTrigger().apply(player);
+    
+        basePlayer.getActiveEquipment().add(this);
+    
         getEffectList().forEach(baseEffect -> baseEffect.apply(player));
     }
     

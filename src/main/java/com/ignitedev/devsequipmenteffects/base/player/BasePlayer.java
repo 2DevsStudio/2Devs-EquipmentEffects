@@ -55,22 +55,23 @@ public class BasePlayer {
                 Arrays.asList(player.getInventory().getContents()));
         
         if (!baseEquipments.isEmpty()) {
-            
-            List<BaseEquipment> equipmentToApply = BaseUtil.findPlayerApplicableBaseEquipment(player, baseEquipments);
-            
             List<BaseEquipment> equipmentToUnapply = new ArrayList<>();
+            List<BaseEquipment> equipmentToApply = BaseUtil.findPlayerApplicableBaseEquipment(player, baseEquipments);
             
             // get equipment to unapply
             getActiveEquipment().forEach(baseEquipment -> {
                 if (!equipmentToApply.contains(baseEquipment)) {
                     equipmentToUnapply.add(baseEquipment);
                 }
+                equipmentToApply.remove(baseEquipment);
             });
             
             equipmentToUnapply.forEach(baseEquipment -> baseEquipment.unApply(player));
             equipmentToApply.forEach(baseEquipment -> {
                 baseEquipment.apply(player);
             });
+        } else {
+            clearPlayerActiveEquipment();
         }
     }
     

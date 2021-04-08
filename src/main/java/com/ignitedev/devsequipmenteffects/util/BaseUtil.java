@@ -29,6 +29,18 @@ public class BaseUtil {
         ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
         
         baseEquipments.forEach(baseEquipment -> {
+            boolean foundDuplicate = false;
+            
+            for (BaseEquipment equipment : appliedBaseEquipment) {
+                if (equipment.getIdentifier().equalsIgnoreCase(baseEquipment.getIdentifier())) {
+                    foundDuplicate = true;
+                    break;
+                }
+            }
+            
+            if (foundDuplicate) {
+                return;
+            }
             
             boolean shouldApply = false;
             
