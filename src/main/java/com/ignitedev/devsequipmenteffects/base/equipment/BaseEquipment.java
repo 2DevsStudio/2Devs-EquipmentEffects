@@ -6,12 +6,10 @@ import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
 import lombok.Data;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -62,9 +60,9 @@ public class BaseEquipment implements Applicable {
         BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(playerUUID);
         
         getBaseTrigger().apply(player);
-    
+        
         basePlayer.getActiveEquipment().add(this);
-    
+        
         getEffectList().forEach(baseEffect -> baseEffect.apply(player));
     }
     

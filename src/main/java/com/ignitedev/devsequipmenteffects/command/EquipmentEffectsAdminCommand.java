@@ -28,7 +28,7 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
     ) {
         
         if (!sender.hasPermission("EquipmentEffects.admin")) {
-            sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getNoPermissions()));
+            sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getNoPermissions()));
             return false;
         }
         
@@ -69,11 +69,11 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             equipmentEffects.reloadConfig();
             baseConfiguration.initialize(equipmentEffects.getConfig());
-            sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getReloadMessage()));
+            sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getReloadMessage()));
             return true;
         }
         
-        sender.sendMessage(BaseUtil.colorComponent(baseConfiguration.getAdminCommandUsage()));
+        sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getAdminCommandUsage()));
         return false;
     }
 }

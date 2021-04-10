@@ -3,8 +3,7 @@ package com.ignitedev.devsequipmenteffects.util;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -14,9 +13,9 @@ import java.util.List;
 @NoArgsConstructor( access = AccessLevel.PRIVATE )
 public class BaseUtil {
     
-    public static Component colorComponent(String toColor) {
+    public static String fixColor(String toColor) {
         
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(toColor).asComponent();
+        return ChatColor.translateAlternateColorCodes('&', toColor);
     }
     
     public static List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
