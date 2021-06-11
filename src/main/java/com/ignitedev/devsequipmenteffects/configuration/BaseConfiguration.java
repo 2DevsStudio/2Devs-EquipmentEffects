@@ -58,6 +58,10 @@ public class BaseConfiguration {
         File[] files = itemsDirectory.listFiles();
         baseEquipmentRepository.getBaseEquipmentCache().clear();
         
+        if (files == null) {
+            return;
+        }
+        
         for (File file : files) {
             YamlConfiguration fileYaml = YamlConfiguration.loadConfiguration(file);
             

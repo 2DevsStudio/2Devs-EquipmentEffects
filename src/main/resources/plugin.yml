@@ -1,7 +1,7 @@
 name: 2DevsEquipmentEffects
 version: ${project.version}
 main: com.ignitedev.devsequipmenteffects.EquipmentEffects
-api-version: 1.16
+api-version: 1.17
 authors: [ IgniteDEV, 2DevsStudio ]
 description: Equipment effects plugin by 2DevsStudio
 commands:
