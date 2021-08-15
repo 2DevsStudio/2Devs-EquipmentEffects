@@ -6,12 +6,14 @@ import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.effect.factory.BaseEffectFactory;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
+import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import java.io.File;
 import java.util.List;
 import lombok.Data;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 @Data
 public class BaseConfiguration {
@@ -78,7 +80,14 @@ public class BaseConfiguration {
       List<BaseEffect> applicableEffects = baseEffectFactory.convertToBaseEffects(
           fileYaml.getStringList("applicable-effects"));
       ItemStack itemStack = fileYaml.getItemStack("itemstack");
+      ItemMeta itemMeta = itemStack.getItemMeta();
 
+      if (itemMeta != null) {
+        if (itemMeta.hasDisplayName()) {
+          itemMeta.setDisplayName(BaseUtil.fixColor(itemMeta.getDisplayName()));
+          itemStack.setItemMeta(itemMeta);
+        }
+      }
       // triggers
 
       List<String> enableCommands = fileYaml.getStringList(
