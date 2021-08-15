@@ -57,11 +57,11 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         return true;
       }
     } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
-
       StringBuilder stringBuilder = new StringBuilder("Available: ");
 
       for (String identifier : baseEquipmentRepository.getBaseEquipmentCache().keySet()) {
-        stringBuilder.append(identifier).append("|");
+        stringBuilder.append(BaseUtil.fixColor("&e" + identifier))
+            .append(BaseUtil.fixColor(" &7| "));
       }
 
       sender.sendMessage(stringBuilder.toString());
