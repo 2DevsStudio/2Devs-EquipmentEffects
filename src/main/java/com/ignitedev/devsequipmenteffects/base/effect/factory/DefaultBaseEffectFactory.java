@@ -1,36 +1,36 @@
 package com.ignitedev.devsequipmenteffects.base.effect.factory;
 
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
-import org.apache.commons.lang.Validate;
-import org.bukkit.potion.PotionEffectType;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang.Validate;
+import org.bukkit.potion.PotionEffectType;
 
 public class DefaultBaseEffectFactory implements BaseEffectFactory {
-    
-    @Override
-    public BaseEffect convertToBaseEffect(String string) {
-        
-        String[] split = string.split(":");
-        PotionEffectType potionEffectType = PotionEffectType.getByName(split[0]);
-        int amplifier = Integer.parseInt(split[1]);
-        
-        Validate.notNull(potionEffectType, "PotionEffectType for " + Arrays.toString(split) + " is null");
-        
-        return new BaseEffect(potionEffectType, amplifier);
+
+  @Override
+  public BaseEffect convertToBaseEffect(String string) {
+
+    String[] split = string.split(":");
+    PotionEffectType potionEffectType = PotionEffectType.getByName(split[0]);
+    int amplifier = Integer.parseInt(split[1]);
+
+    Validate.notNull(potionEffectType,
+        "PotionEffectType for " + Arrays.toString(split) + " is null");
+
+    return new BaseEffect(potionEffectType, amplifier);
+  }
+
+  @Override
+  public List<BaseEffect> convertToBaseEffects(List<String> effects) {
+
+    List<BaseEffect> effectList = new ArrayList<>();
+
+    for (String effect : effects) {
+      effectList.add(convertToBaseEffect(effect));
     }
-    
-    @Override
-    public List<BaseEffect> convertToBaseEffects(List<String> effects) {
-        
-        List<BaseEffect> effectList = new ArrayList<>();
-        
-        for (String effect : effects) {
-            effectList.add(convertToBaseEffect(effect));
-        }
-        
-        return effectList;
-    }
+
+    return effectList;
+  }
 }

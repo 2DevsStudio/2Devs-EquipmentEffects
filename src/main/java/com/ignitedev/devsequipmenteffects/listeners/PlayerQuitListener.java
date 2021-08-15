@@ -10,17 +10,17 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 @RequiredArgsConstructor
 public class PlayerQuitListener implements Listener {
-    
-    private final BasePlayerRepository basePlayerRepository;
-    
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        
-        Player player = event.getPlayer();
-        BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
-        
-        basePlayer.clearPlayerActiveEquipment();
-        basePlayerRepository.remove(player.getUniqueId().toString());
-    }
-    
+
+  private final BasePlayerRepository basePlayerRepository;
+
+  @EventHandler
+  public void onQuit(PlayerQuitEvent event) {
+
+    Player player = event.getPlayer();
+    BasePlayer basePlayer = basePlayerRepository.findById(player.getUniqueId().toString());
+
+    basePlayer.clearPlayerActiveEquipment();
+    basePlayerRepository.remove(player.getUniqueId().toString());
+  }
+
 }

@@ -2,43 +2,42 @@ package com.ignitedev.devsequipmenteffects.base.player.repository;
 
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.interfaces.Repository;
-import lombok.Data;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 @Data
 public class BasePlayerRepository implements Repository<BasePlayer> {
-    
-    private final Map<String, BasePlayer> basePlayerCache = new ConcurrentHashMap<>();
-    
-    @Override
-    public @NotNull BasePlayer findById(String identifier) {
-        
-        BasePlayer basePlayer = basePlayerCache.get(identifier);
-        
-        if (basePlayer == null) {
-            BasePlayer newBasePlayer = new BasePlayer(UUID.fromString(identifier));
-            
-            add(newBasePlayer);
-            
-            return newBasePlayer;
-        }
-        
-        return basePlayer;
+
+  private final Map<String, BasePlayer> basePlayerCache = new ConcurrentHashMap<>();
+
+  @Override
+  public @NotNull BasePlayer findById(String identifier) {
+
+    BasePlayer basePlayer = basePlayerCache.get(identifier);
+
+    if (basePlayer == null) {
+      BasePlayer newBasePlayer = new BasePlayer(UUID.fromString(identifier));
+
+      add(newBasePlayer);
+
+      return newBasePlayer;
     }
-    
-    @Override
-    public void remove(String identifier) {
-        
-        basePlayerCache.remove(identifier);
-    }
-    
-    @Override
-    public void add(BasePlayer value) {
-        
-        basePlayerCache.put(value.getUuid().toString(), value);
-    }
+
+    return basePlayer;
+  }
+
+  @Override
+  public void remove(String identifier) {
+
+    basePlayerCache.remove(identifier);
+  }
+
+  @Override
+  public void add(BasePlayer value) {
+
+    basePlayerCache.put(value.getUuid().toString(), value);
+  }
 }
