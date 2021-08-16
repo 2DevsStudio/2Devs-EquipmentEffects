@@ -1,10 +1,10 @@
 package com.ignitedev.devsequipmenteffects.base.equipment;
 
 import com.ignitedev.devsequipmenteffects.EquipmentEffects;
-import com.ignitedev.devsequipmenteffects.base.effect.BaseChecks;
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
 import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
+import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
 import com.ignitedev.devsequipmenteffects.util.XMaterial;
 import java.util.List;
@@ -28,7 +28,7 @@ public class BaseEquipment implements Applicable {
 
   private final List<BaseEffect> effectList;
   private final BaseTrigger baseTrigger;
-  private final BaseChecks baseChecks;
+  private final BaseCheck[] baseChecks;
 
   private final ItemStack itemStack;
 
@@ -67,31 +67,32 @@ public class BaseEquipment implements Applicable {
     ItemMeta targetMeta = targetItemStack.getItemMeta();
     ItemMeta itemMeta = this.itemStack.getItemMeta();
 
-    if (baseChecks.isDisplayNameCheck()) {
-      if (targetMeta.hasDisplayName() && itemMeta.hasDisplayName()) {
-        if (!targetMeta.getDisplayName().equalsIgnoreCase(itemMeta.getDisplayName())) {
-          return false;
+    boolean isSimilar = true;
+
+    for (BaseCheck baseCheck : baseChecks) {
+      if (baseCheck == BaseCheck.DISPLAY_NAME_CHECK) {
+        if (targetMeta.hasDisplayName() && itemMeta.hasDisplayName()) {
+          if (!targetMeta.getDisplayName().equalsIgnoreCase(itemMeta.getDisplayName())) {
+            isSimilar = false;
+          }
         }
+      } else  if (baseCheck == BaseCheck.LORE_CHECK) {
+        if (targetMeta.hasLore() && itemMeta.hasLore()) {
+          if (!targetMeta.getLore().equals(itemMeta.getLore())) {
+            isSimilar = false;
+          }
+        }
+      } else if(baseCheck == BaseCheck.ENCHANTMENT_CHECK) {
+        if (targetMeta.hasEnchants() && itemMeta.hasEnchants()) {
+          if (!targetMeta.getEnchants().equals(itemMeta.getEnchants())) {
+            isSimilar = false;
+          }
+        }
+      } else if (baseCheck == BaseCheck.ITEM_FLAG_CHECK) {
+        return targetMeta.getItemFlags().equals(itemMeta.getItemFlags());
       }
     }
-    if (baseChecks.isLoreCheck()) {
-      if (targetMeta.hasLore() && itemMeta.hasLore()) {
-        if (!targetMeta.getLore().equals(itemMeta.getLore())) {
-          return false;
-        }
-      }
-    }
-    if (baseChecks.isEnchantCheck()) {
-      if (targetMeta.hasEnchants() && itemMeta.hasEnchants()) {
-        if (!targetMeta.getEnchants().equals(itemMeta.getEnchants())) {
-          return false;
-        }
-      }
-    }
-    if (baseChecks.isItemFlagCheck()) {
-      return targetMeta.getItemFlags().equals(itemMeta.getItemFlags());
-    }
-    return true;
+    return isSimilar;
   }
 
 
