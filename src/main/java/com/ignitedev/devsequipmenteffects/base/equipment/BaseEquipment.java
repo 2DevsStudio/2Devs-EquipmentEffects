@@ -6,6 +6,7 @@ import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
+import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import com.ignitedev.devsequipmenteffects.util.XMaterial;
 import java.util.List;
 import lombok.Data;
@@ -47,9 +48,13 @@ public class BaseEquipment implements Applicable {
         XMaterial targetItem = XMaterial.matchXMaterial(targetItemStack);
 
         if (itemstack == targetItem) {
-          return this.itemStack.hasItemMeta() == targetItemStack.hasItemMeta() && (
-              !this.itemStack.hasItemMeta() || Bukkit.getItemFactory()
-                  .equals(this.itemStack.getItemMeta(), targetItemStack.getItemMeta()));
+          if (BaseUtil.isArrayContainingCheck(baseChecks, BaseCheck.ALL_CHECKS)) {
+            return this.itemStack.hasItemMeta() == targetItemStack.hasItemMeta() && (
+                !this.itemStack.hasItemMeta() || Bukkit.getItemFactory()
+                    .equals(this.itemStack.getItemMeta(), targetItemStack.getItemMeta()));
+          } else {
+            return isSimilarWithoutNBTCheck(targetItemStack);
+          }
         }
       }
     }
@@ -69,27 +74,29 @@ public class BaseEquipment implements Applicable {
 
     boolean isSimilar = true;
 
-    for (BaseCheck baseCheck : baseChecks) {
-      if (baseCheck == BaseCheck.DISPLAY_NAME_CHECK) {
-        if (targetMeta.hasDisplayName() && itemMeta.hasDisplayName()) {
-          if (!targetMeta.getDisplayName().equalsIgnoreCase(itemMeta.getDisplayName())) {
-            isSimilar = false;
+    if (targetMeta != null && itemMeta != null) {
+      for (BaseCheck baseCheck : baseChecks) {
+        if (baseCheck == BaseCheck.DISPLAY_NAME_CHECK) {
+          if (targetMeta.hasDisplayName() && itemMeta.hasDisplayName()) {
+            if (!targetMeta.getDisplayName().equalsIgnoreCase(itemMeta.getDisplayName())) {
+              isSimilar = false;
+            }
           }
-        }
-      } else  if (baseCheck == BaseCheck.LORE_CHECK) {
-        if (targetMeta.hasLore() && itemMeta.hasLore()) {
-          if (!targetMeta.getLore().equals(itemMeta.getLore())) {
-            isSimilar = false;
+        } else if (baseCheck == BaseCheck.LORE_CHECK) {
+          if (targetMeta.hasLore() && itemMeta.hasLore()) {
+            if (!targetMeta.getLore().equals(itemMeta.getLore())) {
+              isSimilar = false;
+            }
           }
-        }
-      } else if(baseCheck == BaseCheck.ENCHANTMENT_CHECK) {
-        if (targetMeta.hasEnchants() && itemMeta.hasEnchants()) {
-          if (!targetMeta.getEnchants().equals(itemMeta.getEnchants())) {
-            isSimilar = false;
+        } else if (baseCheck == BaseCheck.ENCHANTMENT_CHECK) {
+          if (targetMeta.hasEnchants() && itemMeta.hasEnchants()) {
+            if (!targetMeta.getEnchants().equals(itemMeta.getEnchants())) {
+              isSimilar = false;
+            }
           }
+        } else if (baseCheck == BaseCheck.ITEM_FLAG_CHECK) {
+          return targetMeta.getItemFlags().equals(itemMeta.getItemFlags());
         }
-      } else if (baseCheck == BaseCheck.ITEM_FLAG_CHECK) {
-        return targetMeta.getItemFlags().equals(itemMeta.getItemFlags());
       }
     }
     return isSimilar;
