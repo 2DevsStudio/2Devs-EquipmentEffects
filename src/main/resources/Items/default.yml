@@ -28,6 +28,20 @@ must-hold-offhand: false
 applicable-effects:
   - "SPEED:2"
 
+# section for itemstack checks
+item-checks:
+  # if all checks is true, then other checks won't be working ( all checks is also including nbt check)
+  all-checks: true
+  # should check item display name?
+  display-name-check: true
+  # should check item lore?
+  lore-check: true
+  # should check item enchantments?
+  enchantment-check: true
+  # should check item flags?
+  item-flag-check: true
+
+
 # section for interactions on triggering with {must-wear} or {must-hold-mainhand} or {must-hold-offhand}
 trigger-interactions:
 
