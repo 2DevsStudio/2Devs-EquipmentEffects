@@ -23,8 +23,16 @@ public class BaseUtil {
 
     List<BaseEquipment> appliedBaseEquipment = new ArrayList<>();
 
-    ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
-    ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
+    ItemStack itemInMainHand;
+    ItemStack itemInOffHand;
+
+    if (MinecraftVersion.isBefore(9)) {
+      itemInMainHand = player.getInventory().getItemInHand();
+      itemInOffHand = player.getInventory().getItemInHand();
+    } else {
+      itemInMainHand = player.getInventory().getItemInMainHand();
+      itemInOffHand = player.getInventory().getItemInOffHand();
+    }
 
     baseEquipments.forEach(baseEquipment -> {
       boolean foundDuplicate = false;
