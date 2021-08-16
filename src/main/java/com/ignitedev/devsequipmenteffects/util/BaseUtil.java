@@ -1,23 +1,31 @@
 package com.ignitedev.devsequipmenteffects.util;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
+import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class BaseUtil {
 
-  public static String fixColor(String toColor) {
-
+  public String fixColor(String toColor) {
     return ChatColor.translateAlternateColorCodes('&', toColor);
   }
 
-  public static List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
+  public boolean isArrayContainingCheck(BaseCheck[] baseChecks, BaseCheck baseCheck) {
+    for (BaseCheck check : baseChecks) {
+      if (check == baseCheck) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
       List<BaseEquipment> baseEquipments
   ) {
 
