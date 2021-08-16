@@ -101,12 +101,12 @@ public class BaseConfiguration {
       baseEquipmentRepository.add(
           new BaseEquipment(identifier, name, mustWear, mustHoldMainHand, mustHoldOffHand,
               applicableEffects,
-              baseTrigger, getBaseCheck(fileYaml), itemStack
+              baseTrigger, getBaseChecks(fileYaml), itemStack
           ));
     }
   }
 
-  private BaseCheck[] getBaseCheck(YamlConfiguration fileYaml) {
+  private BaseCheck[] getBaseChecks(YamlConfiguration fileYaml) {
     BaseCheck[] baseChecks = new BaseCheck[BaseCheck.values().length];
     int index = 0;
 

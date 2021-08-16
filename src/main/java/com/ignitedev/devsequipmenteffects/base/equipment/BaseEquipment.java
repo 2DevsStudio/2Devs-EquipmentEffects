@@ -72,9 +72,13 @@ public class BaseEquipment implements Applicable {
     ItemMeta targetMeta = targetItemStack.getItemMeta();
     ItemMeta itemMeta = this.itemStack.getItemMeta();
 
-    boolean isSimilar = true;
+    if (targetMeta == null && itemMeta == null) {
+      return true;
+    }
 
-    if (targetMeta != null && itemMeta != null) {
+    boolean isSimilar = (targetMeta != null && itemMeta != null);
+
+    if (isSimilar) {
       for (BaseCheck baseCheck : baseChecks) {
         if (baseCheck == BaseCheck.DISPLAY_NAME_CHECK) {
           if (targetMeta.hasDisplayName() && itemMeta.hasDisplayName()) {
