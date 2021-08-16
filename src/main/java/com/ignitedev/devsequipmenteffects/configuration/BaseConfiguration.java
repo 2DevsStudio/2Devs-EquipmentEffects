@@ -6,6 +6,7 @@ import com.ignitedev.devsequipmenteffects.base.effect.BaseTrigger;
 import com.ignitedev.devsequipmenteffects.base.effect.factory.BaseEffectFactory;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
+import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import java.io.File;
 import java.util.List;
@@ -100,8 +101,21 @@ public class BaseConfiguration {
       baseEquipmentRepository.add(
           new BaseEquipment(identifier, name, mustWear, mustHoldMainHand, mustHoldOffHand,
               applicableEffects,
-              baseTrigger, itemStack
+              baseTrigger, getBaseCheck(fileYaml), itemStack
           ));
     }
+  }
+
+  private BaseCheck[] getBaseCheck(YamlConfiguration fileYaml) {
+    BaseCheck[] baseChecks = new BaseCheck[BaseCheck.values().length];
+    int index = 0;
+
+    for (BaseCheck value : BaseCheck.values()) {
+      if (fileYaml.getBoolean(value.getYamlPath())) {
+        baseChecks[index] = value;
+        index++;
+      }
+    }
+    return baseChecks;
   }
 }
