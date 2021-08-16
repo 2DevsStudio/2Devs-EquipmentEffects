@@ -6,7 +6,7 @@
 
     <groupId>com.ignitedev</groupId>
     <artifactId>2Devs-EquipmentEffects</artifactId>
-    <version>1.5.0-BETA</version>
+    <version>1.5.1-BETA</version>
     <packaging>jar</packaging>
 
     <name>2DevsEquipmentEffects</name>
@@ -43,6 +43,14 @@
                         </configuration>
                     </execution>
                 </executions>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>com.ignitedev</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
@@ -86,6 +94,12 @@
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
             <version>21.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-bukkit</artifactId>
+            <version>2.2.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
