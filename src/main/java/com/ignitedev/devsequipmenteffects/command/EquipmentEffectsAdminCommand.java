@@ -6,6 +6,12 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import lombok.RequiredArgsConstructor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent.Builder;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.ClickEvent.Action;
+import net.kyori.adventure.text.event.HoverEvent;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,13 +38,14 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
       return false;
     }
 
+    Player senderPlayer = (Player) sender;
+
     if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
       String identifier = args[1];
-
       BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
 
       if (baseEquipmentById != null) {
-        ((Player) sender).getInventory().addItem(baseEquipmentById.getItemStack());
+        senderPlayer.getInventory().addItem(baseEquipmentById.getItemStack());
         return true;
       }
     } else if (args.length == 3 && args[0].equalsIgnoreCase("give")) {
@@ -49,7 +56,6 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
       }
 
       String identifier = args[2];
-
       BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
 
       if (baseEquipmentById != null) {
@@ -57,14 +63,26 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         return true;
       }
     } else if (args.length == 1 && args[0].equalsIgnoreCase("list")) {
-      StringBuilder stringBuilder = new StringBuilder("Available: ");
+      Builder builder = null;
 
       for (String identifier : baseEquipmentRepository.getBaseEquipmentCache().keySet()) {
-        stringBuilder.append(BaseUtil.fixColor("&e" + identifier))
-            .append(BaseUtil.fixColor(" &7| "));
-      }
+        Builder content = Component.text()
+            .clickEvent(ClickEvent.clickEvent(Action.SUGGEST_COMMAND, "/eea give " + identifier))
+            .hoverEvent(
+                HoverEvent.showText(
+                    Component.text().content("CLICK ME").color(TextColor.color(255, 0, 0))))
+            .content(BaseUtil.fixColor("&e" + identifier + " &7| "));
 
-      sender.sendMessage(stringBuilder.toString());
+        if (builder == null) {
+          builder = Component.text().content("Available: ").append(content);
+        } else {
+          builder.append(content);
+        }
+      }
+      if (builder != null) {
+        equipmentEffects.adventure.player(senderPlayer).sendMessage(builder.build());
+        return true;
+      }
       return true;
     } else if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
       equipmentEffects.reloadConfig();
