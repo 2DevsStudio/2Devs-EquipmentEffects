@@ -29,7 +29,7 @@ public class BaseEquipment implements Applicable {
 
   private final List<BaseEffect> effectList;
   private final BaseTrigger baseTrigger;
-  private final BaseCheck[] baseChecks;
+  private final List<BaseCheck> baseChecks;
 
   private final ItemStack itemStack;
 
@@ -48,7 +48,7 @@ public class BaseEquipment implements Applicable {
         XMaterial targetItem = XMaterial.matchXMaterial(targetItemStack);
 
         if (itemstack == targetItem) {
-          if (BaseUtil.isArrayContainingCheck(baseChecks, BaseCheck.ALL_CHECKS)) {
+          if (baseChecks.contains(BaseCheck.ALL_CHECKS)) {
             return this.itemStack.hasItemMeta() == targetItemStack.hasItemMeta() && (
                 !this.itemStack.hasItemMeta() || Bukkit.getItemFactory()
                     .equals(this.itemStack.getItemMeta(), targetItemStack.getItemMeta()));
@@ -61,6 +61,24 @@ public class BaseEquipment implements Applicable {
     return false;
   }
 
+  private boolean processCheck(boolean itemBoolean, boolean targetBoolean, Object itemObject,
+      Object targetObject, BaseCheck baseCheck) {
+
+    if (!baseChecks.contains(baseCheck)) {
+      return true;
+    }
+
+    boolean isSimilar = BaseUtil.compareBooleanPair(itemBoolean, targetBoolean);
+
+    if (itemBoolean && targetBoolean) {
+      if (!itemObject.equals(targetObject)) {
+        isSimilar = false;
+      }
+    }
+    return isSimilar;
+  }
+
+
   private boolean isSimilarWithoutNBTCheck(@NotNull ItemStack targetItemStack) {
     XMaterial itemstack = XMaterial.matchXMaterial(this.itemStack);
     XMaterial targetItem = XMaterial.matchXMaterial(targetItemStack);
@@ -72,38 +90,25 @@ public class BaseEquipment implements Applicable {
     ItemMeta targetMeta = targetItemStack.getItemMeta();
     ItemMeta itemMeta = this.itemStack.getItemMeta();
 
-    if (targetMeta == null && itemMeta == null) {
-      return true;
+    if (!BaseUtil.compareBooleanPair(targetMeta == null, itemMeta == null)) {
+      return false;
     }
 
-    boolean isSimilar = (targetMeta != null && itemMeta != null);
-
-    if (isSimilar) {
-      for (BaseCheck baseCheck : baseChecks) {
-        if (baseCheck == BaseCheck.DISPLAY_NAME_CHECK) {
-          if (targetMeta.hasDisplayName() && itemMeta.hasDisplayName()) {
-            if (!targetMeta.getDisplayName().equalsIgnoreCase(itemMeta.getDisplayName())) {
-              isSimilar = false;
-            }
-          }
-        } else if (baseCheck == BaseCheck.LORE_CHECK) {
-          if (targetMeta.hasLore() && itemMeta.hasLore()) {
-            if (!targetMeta.getLore().equals(itemMeta.getLore())) {
-              isSimilar = false;
-            }
-          }
-        } else if (baseCheck == BaseCheck.ENCHANTMENT_CHECK) {
-          if (targetMeta.hasEnchants() && itemMeta.hasEnchants()) {
-            if (!targetMeta.getEnchants().equals(itemMeta.getEnchants())) {
-              isSimilar = false;
-            }
-          }
-        } else if (baseCheck == BaseCheck.ITEM_FLAG_CHECK) {
-          return targetMeta.getItemFlags().equals(itemMeta.getItemFlags());
-        }
-      }
+    // it might be nulled pair
+    if (targetMeta == null || itemMeta == null) {
+      return false;
     }
-    return isSimilar;
+
+    boolean displayNameCheck = processCheck(itemMeta.hasDisplayName(), targetMeta.hasDisplayName(),
+        itemMeta.getDisplayName(), targetMeta.getDisplayName(), BaseCheck.DISPLAY_NAME_CHECK);
+    boolean loreCheck = processCheck(itemMeta.hasLore(), targetMeta.hasLore(),
+        itemMeta.getLore(), targetMeta.getLore(), BaseCheck.LORE_CHECK);
+    boolean enchantmentCheck = processCheck(itemMeta.hasEnchants(), targetMeta.hasEnchants(),
+        itemMeta.getEnchants(), targetMeta.getEnchants(), BaseCheck.ENCHANTMENT_CHECK);
+    boolean flagCheck = processCheck(true, true, itemMeta.getItemFlags(),
+        targetMeta.getItemFlags(), BaseCheck.ITEM_FLAG_CHECK);
+
+    return displayNameCheck && loreCheck && enchantmentCheck && flagCheck;
   }
 
 

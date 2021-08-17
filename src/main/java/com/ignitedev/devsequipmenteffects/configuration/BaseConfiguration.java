@@ -9,6 +9,7 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import lombok.Data;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -101,7 +102,7 @@ public class BaseConfiguration {
       baseEquipmentRepository.add(
           new BaseEquipment(identifier, name, mustWear, mustHoldMainHand, mustHoldOffHand,
               applicableEffects,
-              baseTrigger, getBaseChecks(fileYaml), itemStack
+              baseTrigger, Arrays.asList(getBaseChecks(fileYaml)), itemStack
           ));
     }
   }
