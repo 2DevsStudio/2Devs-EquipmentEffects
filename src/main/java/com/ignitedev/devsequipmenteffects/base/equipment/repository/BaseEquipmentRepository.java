@@ -25,7 +25,7 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
 
   public @Nullable BaseEquipment findByItemStack(ItemStack itemStack) {
 
-    if (itemStack == null || itemStack.getType().isAir()) {
+    if (itemStack == null || itemStack.getType() == Material.AIR) {
       return null;
     }
 

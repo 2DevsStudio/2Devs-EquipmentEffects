@@ -1,30 +1,50 @@
 package com.ignitedev.devsequipmenteffects.util;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
+import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@UtilityClass
 public class BaseUtil {
 
-  public static String fixColor(String toColor) {
-
+  public String fixColor(String toColor) {
     return ChatColor.translateAlternateColorCodes('&', toColor);
   }
 
-  public static List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
+  public boolean compareBooleanPair(boolean boolean1, boolean boolean2) {
+    return (boolean1 && boolean2) || (!boolean1 && !boolean2);
+  }
+
+  public boolean isArrayContainingCheck(BaseCheck[] baseChecks, BaseCheck baseCheck) {
+    for (BaseCheck check : baseChecks) {
+      if (check == baseCheck) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public List<BaseEquipment> findPlayerApplicableBaseEquipment(Player player,
       List<BaseEquipment> baseEquipments
   ) {
 
     List<BaseEquipment> appliedBaseEquipment = new ArrayList<>();
 
-    ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
-    ItemStack itemInOffHand = player.getInventory().getItemInOffHand();
+    ItemStack itemInMainHand;
+    ItemStack itemInOffHand;
+
+    if (MinecraftVersion.isBefore(9)) {
+      itemInMainHand = player.getInventory().getItemInHand();
+      itemInOffHand = player.getInventory().getItemInHand();
+    } else {
+      itemInMainHand = player.getInventory().getItemInMainHand();
+      itemInOffHand = player.getInventory().getItemInOffHand();
+    }
 
     baseEquipments.forEach(baseEquipment -> {
       boolean foundDuplicate = false;

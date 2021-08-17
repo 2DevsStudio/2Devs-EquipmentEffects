@@ -12,6 +12,7 @@ import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
 import java.util.logging.Level;
 import org.apache.commons.lang.Validate;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -31,6 +32,8 @@ public final class EquipmentEffects extends JavaPlugin {
   public void onEnable() {
 
     INSTANCE = this;
+
+    new Metrics(this, 12461);
 
     saveDefaultConfig();
 
