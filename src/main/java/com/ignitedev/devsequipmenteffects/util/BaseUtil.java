@@ -16,6 +16,10 @@ public class BaseUtil {
     return ChatColor.translateAlternateColorCodes('&', toColor);
   }
 
+  public boolean compareBooleanPair(boolean boolean1, boolean boolean2) {
+    return (boolean1 && boolean2) || (!boolean1 && !boolean2);
+  }
+
   public boolean isArrayContainingCheck(BaseCheck[] baseChecks, BaseCheck baseCheck) {
     for (BaseCheck check : baseChecks) {
       if (check == baseCheck) {
