@@ -11,6 +11,7 @@ import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
 import java.util.logging.Level;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.apache.commons.lang.Validate;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -23,6 +24,8 @@ public final class EquipmentEffects extends JavaPlugin {
 
   public static EquipmentEffects INSTANCE;
 
+  public BukkitAudiences adventure;
+
   public BaseEquipmentFactories baseEquipmentFactories;
   public BaseEffectFactories baseEffectFactories;
   public BasePlayerRepository basePlayerRepository;
@@ -33,6 +36,7 @@ public final class EquipmentEffects extends JavaPlugin {
 
     INSTANCE = this;
 
+    this.adventure = BukkitAudiences.create(this);
     new Metrics(this, 12461);
 
     saveDefaultConfig();
@@ -63,7 +67,7 @@ public final class EquipmentEffects extends JavaPlugin {
 
   @Override
   public void onDisable() {
-
+    this.adventure.close();
   }
 
   private void registerCommands(BaseConfiguration baseConfiguration,
