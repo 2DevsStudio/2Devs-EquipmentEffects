@@ -19,6 +19,10 @@ update-partitions-amount: 4
 task-schedule-time: 20
 
 messages:
-  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload"
+  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload | /EEA create {ITEM_ID}"
   reload: "Config got reloaded!"
   no-permissions: "No Permissions!"
+  item-already-exists: "You cannot create item with the same ID!"
+  no-item-in-hand: "You need to hold item in your hand!"
+  this-command-is-player-only: "In order to execute that command you need to execute it in-game!"
+  created-new-item: "Congratulations, you created new Item!"
