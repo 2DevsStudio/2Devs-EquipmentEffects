@@ -14,20 +14,14 @@ public class BaseTrigger implements Applicable {
 
   @Override
   public void apply(Player player) {
-
-    enableCommands.forEach(command -> {
-      Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-          command.replace("%player%", player.getName()));
-    });
+    enableCommands.forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+        command.replace("%player%", player.getName())));
   }
 
   @Override
   public void unApply(Player player) {
-
-    disableCommands.forEach(command -> {
-      Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-          command.replace("%player%", player.getName()));
-    });
+    disableCommands.forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
+        command.replace("%player%", player.getName())));
   }
 
 }
