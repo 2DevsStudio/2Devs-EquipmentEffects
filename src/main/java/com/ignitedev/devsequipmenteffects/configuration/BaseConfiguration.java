@@ -22,16 +22,19 @@ public class BaseConfiguration {
 
   private final BaseEquipmentRepository baseEquipmentRepository;
   private final EquipmentEffects equipmentEffects;
-  public File itemsDirectory;
+  private File itemsDirectory;
   private int taskScheduleTimeTicks;
   private int updatePartitionsAmount;
   private int partitionMinimumPlayersMultiplier;
   private String adminCommandUsage;
   private String reloadMessage;
   private String noPermissions;
+  private String itemAlreadyExists;
+  private String noItemInHand;
+  private String thisCommandIsPlayerOnly;
+  private String createdNewItem;
 
   public void initialize(FileConfiguration fileConfiguration) {
-
     partitionMinimumPlayersMultiplier = fileConfiguration.getInt(
         "partition-minimum-players-multiplier");
     taskScheduleTimeTicks = fileConfiguration.getInt("task-schedule-time");
@@ -40,6 +43,10 @@ public class BaseConfiguration {
     adminCommandUsage = fileConfiguration.getString("messages.admin-command-usage");
     reloadMessage = fileConfiguration.getString("messages.reload");
     noPermissions = fileConfiguration.getString("messages.no-permissions");
+    itemAlreadyExists = fileConfiguration.getString("messages.item-already-exists");
+    noItemInHand = fileConfiguration.getString("no-item-in-hand");
+    thisCommandIsPlayerOnly = fileConfiguration.getString("this-command-is-player-only");
+    createdNewItem = fileConfiguration.getString("created-new-item");
 
     itemsDirectory = new File(equipmentEffects.getDataFolder(), "/Items");
 
