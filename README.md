@@ -11,11 +11,9 @@ particles or execute commands :)
 
 - Giving player permission on effect
 - Particles
-- Executing commands
 - NBT support
 - WorldGuard Support
 - Support for projectiles
-- Command to create items in-game
 - Auto completion
 
 Note: Thanks to https://github.com/kawaii for all suggestions <3
@@ -26,6 +24,7 @@ Note: Thanks to https://github.com/kawaii for all suggestions <3
 - /EquipmentEffectsAdmin list - To check list of created items
 - /EquipmentEffectsAdmin give {PLAYER} {ITEM_ID} - Give Item to player
 - /EquipmentEffectsAdmin give {ITEM_ID} - Give Item
+- /EquipmentEffectsAdmin create {ITEM_ID} - Create new File with given Item ID(on holding item in hand)
 
 ### Permissions ###
 
@@ -64,15 +63,32 @@ must-hold-offhand: false
 applicable-effects:
   - "SPEED:2"
 
+# section for itemstack checks
+item-checks:
+  # if all checks is true, then other checks won't be working ( all checks is also including nbt check)
+  all-checks: true
+  # should check item display name?
+  display-name-check: true
+  # should check item lore?
+  lore-check: true
+  # should check item enchantments?
+  enchantment-check: true
+  # should check item flags?
+  item-flag-check: true
+
+
 # section for interactions on triggering with {must-wear} or {must-hold-mainhand} or {must-hold-offhand}
 trigger-interactions:
+
+  # placeholders:
+  # %player% -> Nickname of executing player
 
   # trigger on triggering enable for interaction ( example; holding item )
   trigger-enable:
 
     # command which will be executed
     command:
-      - "say Trigger on"
+      - "say Trigger on for %player%"
       - "say Test123"
 
   # trigger on triggering disable for interaction ( example; un-holding item )
@@ -120,7 +136,11 @@ update-partitions-amount: 4
 task-schedule-time: 20
 
 messages:
-  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload"
+  admin-command-usage: "Usage of admin command: /EEA give <id> | /EEA list | /EEA reload | /EEA create {ITEM_ID}"
   reload: "Config got reloaded!"
   no-permissions: "No Permissions!"
+  item-already-exists: "You cannot create item with the same ID!"
+  no-item-in-hand: "You need to hold item in your hand!"
+  this-command-is-player-only: "In order to execute that command you need to execute it in-game!"
+  created-new-item: "Congratulations, you created new Item!"
 ```
