@@ -3,8 +3,11 @@ This is a plugin that allows you to create equipment or held items which gives y
 particles or execute commands :)
 
 ## Functionalities:
-* Super duper command
-* Super duper item 
+* Everything is configurable!
+* Stupid simple!
+* Easy configuration-side item creator ( also item creator by command )
+* Special Mode which saving tps by spliting operation to parts
+* Plethora of Item configuration; All checks enabled separately,  applicable potion effects, command on enable/disable
 
 ## Supported Versions
 1.8.1 <-> 1.17.1
