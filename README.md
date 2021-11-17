@@ -1,34 +1,30 @@
-# 2Devs Equipment Effects #
-
-# Work in progress ;)
-
-### Description ###
-
+## Description:
 This is a plugin that allows you to create equipment or held items which gives you potion effects, permissions,
 particles or execute commands :)
 
-### Todo List ###
+## Functionalities:
+* Super duper command
+* Super duper item 
 
-- Giving player permission on effect
-- Particles
-- NBT support
-- WorldGuard Support
-- Support for projectiles
-- Auto completion
+## Supported Versions
+1.8.1 <-> 1.17.1
 
-Note: Thanks to https://github.com/kawaii for all suggestions <3
 
-### Commands ###
+## Permissions:
+- `/EquipmentEffectsAdmin` (/eea) - EquipmentEffects.admin
 
-- /EquipmentEffectsAdmin reload - To reload Configuration
-- /EquipmentEffectsAdmin list - To check list of created items
-- /EquipmentEffectsAdmin give {PLAYER} {ITEM_ID} - Give Item to player
-- /EquipmentEffectsAdmin give {ITEM_ID} - Give Item
-- /EquipmentEffectsAdmin create {ITEM_ID} - Create new File with given Item ID(on holding item in hand)
 
-### Permissions ###
+## Commands:
 
-- /EquipmentEffectsAdmin - EquipmentEffects.admin
+- `/EquipmentEffectsAdmin reload` - To reload Configuration
+- `/EquipmentEffectsAdmin list` - To check list of created items
+- `/EquipmentEffectsAdmin give {PLAYER} {ITEM_ID}` - Give Item to player
+- `/EquipmentEffectsAdmin give {ITEM_ID}` - Give Item
+- `/EquipmentEffectsAdmin create {ITEM_ID}` - Create new File with given Item ID(on holding item in hand)
+
+
+## Preview:
+You can watch preview video right [here](https://www.youtube.com/watch?v=qoD5U2vfd0Q)!
 
 ### Item Configuration ###
 
