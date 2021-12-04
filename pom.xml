@@ -6,7 +6,7 @@
 
     <groupId>com.ignitedev</groupId>
     <artifactId>2Devs-EquipmentEffects</artifactId>
-    <version>1.5.4</version>
+    <version>1.5.5</version>
     <packaging>jar</packaging>
 
     <name>2DevsEquipmentEffects</name>
