@@ -46,14 +46,11 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
       }
 
       cycle = baseConfiguration.getUpdatePartitionsAmount();
-
       partitions = Lists.partition(
           onlinePlayersList,
           onlinePlayersList.size() / baseConfiguration.getUpdatePartitionsAmount());
     }
-
-    iterateThroughPlayers(partitions.get(cycle - 1));
-
+    iterateThroughPlayers(partitions.get(cycle == 0 ? 0 : cycle - 1));
     cycle = cycle - 1;
   }
 
