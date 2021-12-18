@@ -8,9 +8,9 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.command.EquipmentEffectsAdminCommand;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
+import com.ignitedev.devsequipmenteffects.listeners.PlayerDeathListener;
 import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
-import java.util.logging.Level;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.apache.commons.lang.Validate;
 import org.bstats.bukkit.Metrics;
@@ -19,6 +19,8 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.logging.Level;
 
 public final class EquipmentEffects extends JavaPlugin {
 
@@ -59,9 +61,11 @@ public final class EquipmentEffects extends JavaPlugin {
     String configVersion = getConfig().getString("config-version");
 
     if (!this.getDescription().getVersion().equalsIgnoreCase(configVersion)) {
-      getLogger().log(
-          Level.WARNING, "Config version and plugin version are different, please generate new " +
-              "config because you can have missing values!");
+      getLogger()
+          .log(
+              Level.WARNING,
+              "Config version and plugin version are different, please generate new "
+                  + "config because you can have missing values!");
     }
   }
 
@@ -70,9 +74,8 @@ public final class EquipmentEffects extends JavaPlugin {
     this.adventure.close();
   }
 
-  private void registerCommands(BaseConfiguration baseConfiguration,
-      BaseEquipmentRepository baseEquipmentRepository
-  ) {
+  private void registerCommands(
+      BaseConfiguration baseConfiguration, BaseEquipmentRepository baseEquipmentRepository) {
 
     PluginCommand equipmentEffectsAdminCommand = getCommand("equipmenteffectsadmin");
 
@@ -84,21 +87,20 @@ public final class EquipmentEffects extends JavaPlugin {
 
   private void scheduleTasks(BaseConfiguration baseConfiguration) {
 
-    new UpdatePlayerEffectsTask(baseConfiguration, basePlayerRepository).runTaskTimer(this, 100,
-        baseConfiguration.getTaskScheduleTimeTicks()
-    );
+    new UpdatePlayerEffectsTask(baseConfiguration, basePlayerRepository)
+        .runTaskTimer(this, 100, baseConfiguration.getTaskScheduleTimeTicks());
   }
 
   private void registerListeners(PluginManager pluginManager) {
-
+    pluginManager.registerEvents(new PlayerDeathListener(basePlayerRepository), this);
     pluginManager.registerEvents(new PlayerQuitListener(basePlayerRepository), this);
   }
 
   private void registerEquipmentFactories(BaseEquipmentRepository baseEquipmentRepository) {
 
     baseEquipmentFactories = new BaseEquipmentFactories();
-    baseEquipmentFactories.register("DEFAULT",
-        new DefaultBaseEquipmentFactory(baseEquipmentRepository));
+    baseEquipmentFactories.register(
+        "DEFAULT", new DefaultBaseEquipmentFactory(baseEquipmentRepository));
   }
 
   private void registerEffectsFactories() {
