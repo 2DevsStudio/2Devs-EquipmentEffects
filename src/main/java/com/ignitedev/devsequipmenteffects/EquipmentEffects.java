@@ -8,8 +8,8 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.command.EquipmentEffectsAdminCommand;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
-import com.ignitedev.devsequipmenteffects.listeners.PlayerDeathListener;
 import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
+import com.ignitedev.devsequipmenteffects.listeners.PlayerSpawnListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.apache.commons.lang.Validate;
@@ -92,8 +92,8 @@ public final class EquipmentEffects extends JavaPlugin {
   }
 
   private void registerListeners(PluginManager pluginManager) {
-    pluginManager.registerEvents(new PlayerDeathListener(basePlayerRepository), this);
     pluginManager.registerEvents(new PlayerQuitListener(basePlayerRepository), this);
+    pluginManager.registerEvents(new PlayerSpawnListener(basePlayerRepository), this);
   }
 
   private void registerEquipmentFactories(BaseEquipmentRepository baseEquipmentRepository) {

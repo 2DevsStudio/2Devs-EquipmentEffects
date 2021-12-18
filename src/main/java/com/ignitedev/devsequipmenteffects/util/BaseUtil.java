@@ -55,7 +55,6 @@ public class BaseUtil {
           break;
         }
       }
-
       if (foundDuplicate) {
         return;
       }
