@@ -7,5 +7,4 @@ public interface Applicable {
   void apply(Player player);
 
   void unApply(Player player);
-
 }

@@ -1,10 +1,11 @@
 package com.ignitedev.devsequipmenteffects.base.effect;
 
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
-import java.util.List;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @Data
 public class BaseTrigger implements Applicable {
@@ -14,14 +15,17 @@ public class BaseTrigger implements Applicable {
 
   @Override
   public void apply(Player player) {
-    enableCommands.forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-        command.replace("%player%", player.getName())));
+    enableCommands.forEach(
+        command ->
+            Bukkit.dispatchCommand(
+                Bukkit.getConsoleSender(), command.replace("%player%", player.getName())));
   }
 
   @Override
   public void unApply(Player player) {
-    disableCommands.forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(),
-        command.replace("%player%", player.getName())));
+    disableCommands.forEach(
+        command ->
+            Bukkit.dispatchCommand(
+                Bukkit.getConsoleSender(), command.replace("%player%", player.getName())));
   }
-
 }

@@ -2,15 +2,15 @@ package com.ignitedev.devsequipmenteffects.base.equipment.repository;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.interfaces.Repository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class BaseEquipmentRepository implements Repository<BaseEquipment> {
@@ -60,5 +60,4 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
 
     baseEquipmentCache.put(value.getIdentifier(), value);
   }
-
 }

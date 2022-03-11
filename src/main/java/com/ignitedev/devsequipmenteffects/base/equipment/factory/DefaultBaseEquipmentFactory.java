@@ -2,11 +2,12 @@ package com.ignitedev.devsequipmenteffects.base.equipment.factory;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * If you thinking for what is that wrapping, this wrapping is for future

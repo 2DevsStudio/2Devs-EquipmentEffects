@@ -21,5 +21,4 @@ public abstract class FactoryHolder<T extends Factory> {
 
     return factoryMap.get("DEFAULT");
   }
-
 }

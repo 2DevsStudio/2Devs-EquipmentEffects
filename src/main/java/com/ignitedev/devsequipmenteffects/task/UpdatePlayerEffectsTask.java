@@ -4,12 +4,13 @@ import com.google.common.collect.Lists;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class UpdatePlayerEffectsTask extends BukkitRunnable {
@@ -34,11 +35,12 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
         return;
       }
 
-      if (onlinePlayersList.size() <
-          baseConfiguration.getUpdatePartitionsAmount() *
-              baseConfiguration.getPartitionMinimumPlayersMultiplier()) {
+      if (onlinePlayersList.size()
+          < baseConfiguration.getUpdatePartitionsAmount()
+              * baseConfiguration.getPartitionMinimumPlayersMultiplier()) {
 
-        // if player amount is lower than (partition amount * multiplier), update inventories instantly for
+        // if player amount is lower than (partition amount * multiplier), update inventories
+        // instantly for
         // everyone at the same time
 
         iterateThroughPlayers(new ArrayList<>(onlinePlayersList));
@@ -46,9 +48,10 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
       }
 
       cycle = baseConfiguration.getUpdatePartitionsAmount();
-      partitions = Lists.partition(
-          onlinePlayersList,
-          onlinePlayersList.size() / baseConfiguration.getUpdatePartitionsAmount());
+      partitions =
+          Lists.partition(
+              onlinePlayersList,
+              onlinePlayersList.size() / baseConfiguration.getUpdatePartitionsAmount());
     }
     iterateThroughPlayers(partitions.get(cycle == 0 ? 0 : cycle - 1));
     cycle = cycle - 1;

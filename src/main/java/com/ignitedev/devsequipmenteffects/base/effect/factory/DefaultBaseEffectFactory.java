@@ -1,11 +1,12 @@
 package com.ignitedev.devsequipmenteffects.base.effect.factory;
 
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
+import org.apache.commons.lang.Validate;
+import org.bukkit.potion.PotionEffectType;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.apache.commons.lang.Validate;
-import org.bukkit.potion.PotionEffectType;
 
 public class DefaultBaseEffectFactory implements BaseEffectFactory {
 
@@ -16,8 +17,8 @@ public class DefaultBaseEffectFactory implements BaseEffectFactory {
     PotionEffectType potionEffectType = PotionEffectType.getByName(split[0]);
     int amplifier = Integer.parseInt(split[1]);
 
-    Validate.notNull(potionEffectType,
-        "PotionEffectType for " + Arrays.toString(split) + " is null");
+    Validate.notNull(
+        potionEffectType, "PotionEffectType for " + Arrays.toString(split) + " is null");
 
     return new BaseEffect(potionEffectType, amplifier);
   }

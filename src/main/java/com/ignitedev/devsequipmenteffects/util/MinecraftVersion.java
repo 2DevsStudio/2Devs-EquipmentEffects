@@ -7,14 +7,14 @@ import org.bukkit.Bukkit;
 @UtilityClass
 public class MinecraftVersion {
 
-  private final static String stringVersion;
-  private final static int intVersion;
+  private static final String stringVersion;
+  private static final int intVersion;
 
   static {
     String fullVersion = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     stringVersion = StringUtils.replace(fullVersion, "_", " ");
-    intVersion = Integer.parseInt(
-        StringUtils.replace(fullVersion.split("_")[1].split("_R")[0], "v", ""));
+    intVersion =
+        Integer.parseInt(StringUtils.replace(fullVersion.split("_")[1].split("_R")[0], "v", ""));
   }
 
   public static boolean is(int version2) {

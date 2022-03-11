@@ -6,12 +6,6 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import com.ignitedev.devsequipmenteffects.util.MinecraftVersion;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.logging.Level;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -31,6 +25,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.*;
+import java.util.logging.Level;
+
 @RequiredArgsConstructor
 public class EquipmentEffectsAdminCommand implements CommandExecutor {
 
@@ -40,11 +37,11 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
 
   @SneakyThrows
   @Override
-  public boolean onCommand(@NotNull CommandSender sender,
+  public boolean onCommand(
+      @NotNull CommandSender sender,
       @NotNull Command command,
       @NotNull String label,
-      @NotNull String[] args
-  ) {
+      @NotNull String[] args) {
 
     if (!sender.hasPermission("EquipmentEffects.admin")) {
       sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getNoPermissions()));
@@ -84,12 +81,14 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
       Builder builder = null;
 
       for (String identifier : baseEquipmentRepository.getBaseEquipmentCache().keySet()) {
-        Builder content = Component.text()
-            .clickEvent(ClickEvent.clickEvent(Action.SUGGEST_COMMAND, "/eea give " + identifier))
-            .hoverEvent(
-                HoverEvent.showText(
-                    Component.text().content("CLICK ME").color(TextColor.color(255, 0, 0))))
-            .content(BaseUtil.fixColor("&e" + identifier + " &7| "));
+        Builder content =
+            Component.text()
+                .clickEvent(
+                    ClickEvent.clickEvent(Action.SUGGEST_COMMAND, "/eea give " + identifier))
+                .hoverEvent(
+                    HoverEvent.showText(
+                        Component.text().content("CLICK ME").color(TextColor.color(255, 0, 0))))
+                .content(BaseUtil.fixColor("&e" + identifier + " &7| "));
 
         if (builder == null) {
           builder = Component.text().content("Available: ").append(content);

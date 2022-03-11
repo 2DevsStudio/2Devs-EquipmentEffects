@@ -8,14 +8,15 @@ import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
 import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import lombok.Data;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 public class BaseConfiguration {
@@ -35,8 +36,8 @@ public class BaseConfiguration {
   private String createdNewItem;
 
   public void initialize(FileConfiguration fileConfiguration) {
-    partitionMinimumPlayersMultiplier = fileConfiguration.getInt(
-        "partition-minimum-players-multiplier");
+    partitionMinimumPlayersMultiplier =
+        fileConfiguration.getInt("partition-minimum-players-multiplier");
     taskScheduleTimeTicks = fileConfiguration.getInt("task-schedule-time");
     updatePartitionsAmount = fileConfiguration.getInt("update-partitions-amount");
 
@@ -86,8 +87,8 @@ public class BaseConfiguration {
       boolean mustWear = fileYaml.getBoolean("must-wear");
       boolean mustHoldMainHand = fileYaml.getBoolean("must-hold-mainhand");
       boolean mustHoldOffHand = fileYaml.getBoolean("must-hold-offhand");
-      List<BaseEffect> applicableEffects = baseEffectFactory.convertToBaseEffects(
-          fileYaml.getStringList("applicable-effects"));
+      List<BaseEffect> applicableEffects =
+          baseEffectFactory.convertToBaseEffects(fileYaml.getStringList("applicable-effects"));
       ItemStack itemStack = fileYaml.getItemStack("itemstack");
       ItemMeta itemMeta = itemStack.getItemMeta();
 
@@ -99,18 +100,24 @@ public class BaseConfiguration {
       }
       // triggers
 
-      List<String> enableCommands = fileYaml.getStringList(
-          "trigger-interactions.trigger-enable.command");
-      List<String> disableCommands = fileYaml.getStringList(
-          "trigger-interactions.trigger-disable.command");
+      List<String> enableCommands =
+          fileYaml.getStringList("trigger-interactions.trigger-enable.command");
+      List<String> disableCommands =
+          fileYaml.getStringList("trigger-interactions.trigger-disable.command");
 
       BaseTrigger baseTrigger = new BaseTrigger(enableCommands, disableCommands);
 
       baseEquipmentRepository.add(
-          new BaseEquipment(identifier, name, mustWear, mustHoldMainHand, mustHoldOffHand,
+          new BaseEquipment(
+              identifier,
+              name,
+              mustWear,
+              mustHoldMainHand,
+              mustHoldOffHand,
               applicableEffects,
-              baseTrigger, Arrays.asList(getBaseChecks(fileYaml)), itemStack
-          ));
+              baseTrigger,
+              Arrays.asList(getBaseChecks(fileYaml)),
+              itemStack));
     }
   }
 

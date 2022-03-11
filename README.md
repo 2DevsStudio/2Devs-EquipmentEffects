@@ -1,22 +1,24 @@
 ## Description:
+
 This is a plugin that allows you to create equipment or held items which gives you potion effects, permissions,
 particles or execute commands :)
 
 ## Functionalities:
+
 * Everything is configurable!
 * Stupid simple!
 * Easy configuration-side item creator ( also item creator by command )
 * Special Mode which saving tps by spliting operation to parts
-* Plethora of Item configuration; All checks enabled separately,  applicable potion effects, command on enable/disable
+* Plethora of Item configuration; All checks enabled separately, applicable potion effects, command on enable/disable
 * OpenSource!!!
 
 ## Supported Versions
+
 1.8.1 <-> 1.17.1
 
-
 ## Permissions:
-- `/EquipmentEffectsAdmin` (/eea) - EquipmentEffects.admin
 
+- `/EquipmentEffectsAdmin` (/eea) - EquipmentEffects.admin
 
 ## Commands:
 
@@ -26,8 +28,8 @@ particles or execute commands :)
 - `/EquipmentEffectsAdmin give {ITEM_ID}` - Give Item
 - `/EquipmentEffectsAdmin create {ITEM_ID}` - Create new File with given Item ID(on holding item in hand)
 
-
 ## Preview:
+
 You can watch preview video right [here](https://www.youtube.com/watch?v=qoD5U2vfd0Q)!
 
 ### Item Configuration ###
