@@ -14,7 +14,7 @@ particles or execute commands :)
 
 ## Supported Versions
 
-1.8.1 <-> 1.17.1
+1.8.1 <-> 1.19.2
 
 ## Permissions:
 

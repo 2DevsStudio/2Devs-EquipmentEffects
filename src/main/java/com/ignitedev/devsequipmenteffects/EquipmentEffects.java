@@ -12,7 +12,7 @@ import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
 import com.ignitedev.devsequipmenteffects.listeners.PlayerSpawnListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;

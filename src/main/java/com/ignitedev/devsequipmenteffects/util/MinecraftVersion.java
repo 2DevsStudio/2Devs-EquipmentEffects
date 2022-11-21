@@ -1,7 +1,7 @@
 package com.ignitedev.devsequipmenteffects.util;
 
 import lombok.experimental.UtilityClass;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.Bukkit;
 
 @UtilityClass
