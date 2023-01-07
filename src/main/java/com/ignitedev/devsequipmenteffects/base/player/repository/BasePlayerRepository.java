@@ -2,12 +2,11 @@ package com.ignitedev.devsequipmenteffects.base.player.repository;
 
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.interfaces.Repository;
-import lombok.Data;
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import lombok.Data;
+import org.jetbrains.annotations.NotNull;
 
 @Data
 public class BasePlayerRepository implements Repository<BasePlayer> {

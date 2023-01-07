@@ -1,12 +1,11 @@
 package com.ignitedev.devsequipmenteffects.base.effect.factory;
 
 import com.ignitedev.devsequipmenteffects.base.effect.BaseEffect;
-import org.apache.commons.lang3.Validate;
-import org.bukkit.potion.PotionEffectType;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import org.apache.commons.lang3.Validate;
+import org.bukkit.potion.PotionEffectType;
 
 public class DefaultBaseEffectFactory implements BaseEffectFactory {
 

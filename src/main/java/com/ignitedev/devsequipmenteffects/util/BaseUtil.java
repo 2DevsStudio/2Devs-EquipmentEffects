@@ -2,13 +2,12 @@ package com.ignitedev.devsequipmenteffects.util;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @UtilityClass
 public class BaseUtil {

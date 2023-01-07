@@ -4,13 +4,12 @@ import com.google.common.collect.Lists;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class UpdatePlayerEffectsTask extends BukkitRunnable {
