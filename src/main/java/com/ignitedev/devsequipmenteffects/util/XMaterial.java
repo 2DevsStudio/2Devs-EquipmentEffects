@@ -25,28 +25,20 @@ package com.ignitedev.devsequipmenteffects.util;
 import com.google.common.base.Enums;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SpawnEggMeta;
-import org.bukkit.potion.Potion;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
 
 /**
  * <b>XMaterial</b> - Data Values/Pre-flattening<br>
@@ -154,7 +146,9 @@ public enum XMaterial {
   BEDROCK,
   BEEF("RAW_BEEF"),
   BEEHIVE,
-  /** Beetroot is a known material in pre-1.13 */
+  /**
+   * Beetroot is a known material in pre-1.13
+   */
   BEETROOT("BEETROOT_BLOCK"),
   BEETROOTS("BEETROOT"),
   BEETROOT_SEEDS,
@@ -188,7 +182,9 @@ public enum XMaterial {
   BLACKSTONE_STAIRS,
   BLACKSTONE_WALL,
   BLACK_BANNER("STANDING_BANNER", "BANNER"),
-  /** Version 1.12+ interprets "BED" as BLACK_BED due to enum alphabetic ordering. */
+  /**
+   * Version 1.12+ interprets "BED" as BLACK_BED due to enum alphabetic ordering.
+   */
   BLACK_BED(supports(12) ? 15 : 0, "BED_BLOCK", "BED"),
   BLACK_CANDLE,
   BLACK_CANDLE_CAKE,
@@ -495,7 +491,9 @@ public enum XMaterial {
   DIORITE_STAIRS,
   DIORITE_WALL,
   DIRT,
-  /** Changed in 1.17 */
+  /**
+   * Changed in 1.17
+   */
   DIRT_PATH("GRASS_PATH"),
   DISC_FRAGMENT_5,
   DISPENSER,
@@ -571,7 +569,9 @@ public enum XMaterial {
   FOX_SPAWN_EGG,
   FROGSPAWN,
   FROG_SPAWN_EGG,
-  /** This special material cannot be obtained as an item. */
+  /**
+   * This special material cannot be obtained as an item.
+   */
   FROSTED_ICE,
   FURNACE("BURNING_FURNACE"),
   FURNACE_MINECART("POWERED_MINECART"),
@@ -637,7 +637,9 @@ public enum XMaterial {
   GREEN_CARPET(13, "CARPET"),
   GREEN_CONCRETE(13, "CONCRETE"),
   GREEN_CONCRETE_POWDER(13, "CONCRETE_POWDER"),
-  /** 1.13 renamed to CACTUS_GREEN 1.14 renamed to GREEN_DYE */
+  /**
+   * 1.13 renamed to CACTUS_GREEN 1.14 renamed to GREEN_DYE
+   */
   GREEN_DYE(2, "INK_SACK", "CACTUS_GREEN"),
   GREEN_GLAZED_TERRACOTTA,
   GREEN_SHULKER_BOX,
@@ -767,7 +769,9 @@ public enum XMaterial {
   LIGHT_GRAY_CONCRETE(8, "CONCRETE"),
   LIGHT_GRAY_CONCRETE_POWDER(8, "CONCRETE_POWDER"),
   LIGHT_GRAY_DYE(7, "INK_SACK"),
-  /** Renamed to SILVER_GLAZED_TERRACOTTA in 1.12 Renamed to LIGHT_GRAY_GLAZED_TERRACOTTA in 1.14 */
+  /**
+   * Renamed to SILVER_GLAZED_TERRACOTTA in 1.12 Renamed to LIGHT_GRAY_GLAZED_TERRACOTTA in 1.14
+   */
   LIGHT_GRAY_GLAZED_TERRACOTTA("SILVER_GLAZED_TERRACOTTA"),
   LIGHT_GRAY_SHULKER_BOX("SILVER_SHULKER_BOX"),
   LIGHT_GRAY_STAINED_GLASS(8, "STAINED_GLASS"),
@@ -1146,14 +1150,18 @@ public enum XMaterial {
   REDSTONE_WALL_TORCH,
   REDSTONE_WIRE,
   RED_BANNER(1, "STANDING_BANNER", "BANNER"),
-  /** Data value 14 or 0 */
+  /**
+   * Data value 14 or 0
+   */
   RED_BED(supports(12) ? 14 : 0, "BED_BLOCK", "BED"),
   RED_CANDLE,
   RED_CANDLE_CAKE,
   RED_CARPET(14, "CARPET"),
   RED_CONCRETE(14, "CONCRETE"),
   RED_CONCRETE_POWDER(14, "CONCRETE_POWDER"),
-  /** 1.13 renamed to ROSE_RED 1.14 renamed to RED_DYE */
+  /**
+   * 1.13 renamed to ROSE_RED 1.14 renamed to RED_DYE
+   */
   RED_DYE(1, "INK_SACK", "ROSE_RED"),
   RED_GLAZED_TERRACOTTA,
   RED_MUSHROOM,
@@ -1317,7 +1325,9 @@ public enum XMaterial {
    */
   STRUCTURE_VOID(10, "BARRIER"),
   SUGAR,
-  /** Sugar Cane is a known material in pre-1.13 */
+  /**
+   * Sugar Cane is a known material in pre-1.13
+   */
   SUGAR_CANE("SUGAR_CANE_BLOCK"),
   SUNFLOWER("DOUBLE_PLANT"),
   SUSPICIOUS_STEW,
@@ -1419,7 +1429,9 @@ public enum XMaterial {
   WEEPING_VINES,
   WEEPING_VINES_PLANT,
   WET_SPONGE(1, "SPONGE"),
-  /** Wheat is a known material in pre-1.13 */
+  /**
+   * Wheat is a known material in pre-1.13
+   */
   WHEAT("CROPS"),
   WHEAT_SEEDS("SEEDS"),
   WHITE_BANNER(15, "STANDING_BANNER", "BANNER"),
@@ -1459,7 +1471,9 @@ public enum XMaterial {
   YELLOW_CARPET(4, "CARPET"),
   YELLOW_CONCRETE(4, "CONCRETE"),
   YELLOW_CONCRETE_POWDER(4, "CONCRETE_POWDER"),
-  /** 1.13 renamed to DANDELION_YELLOW 1.14 renamed to YELLOW_DYE */
+  /**
+   * 1.13 renamed to DANDELION_YELLOW 1.14 renamed to YELLOW_DYE
+   */
   YELLOW_DYE(11, "INK_SACK", "DANDELION_YELLOW"),
   YELLOW_GLAZED_TERRACOTTA,
   YELLOW_SHULKER_BOX,
@@ -1578,16 +1592,18 @@ public enum XMaterial {
    *
    * @see #getLegacy()
    */
-  @Nonnull private final String[] legacy;
+  @NonNull
+  private final String[] legacy;
   /**
    * The cached Bukkit parsed material.
    *
    * @see #parseMaterial()
    * @since 9.0.0
    */
-  @Nullable private final Material material;
+  @Nullable
+  private final Material material;
 
-  XMaterial(int data, @Nonnull String... legacy) {
+  XMaterial(int data, @NonNull String... legacy) {
     this.data = (byte) data;
     this.legacy = legacy;
 
@@ -1614,8 +1630,8 @@ public enum XMaterial {
    * @return an optional that can be empty.
    * @since 5.1.0
    */
-  @Nonnull
-  private static Optional<XMaterial> getIfPresent(@Nonnull String name) {
+  @NonNull
+  private static Optional<XMaterial> getIfPresent(@NonNull String name) {
     return Optional.ofNullable(NAMES.get(name));
   }
 
@@ -1638,7 +1654,7 @@ public enum XMaterial {
    * @since 1.0.0
    */
   @Nullable
-  private static XMaterial requestOldXMaterial(@Nonnull String name, byte data) {
+  private static XMaterial requestOldXMaterial(@NonNull String name, byte data) {
     String holder = name + data;
     XMaterial cache = NAME_CACHE.getIfPresent(holder);
     if (cache != null) return cache;
@@ -1662,8 +1678,8 @@ public enum XMaterial {
    * @see #matchDefinedXMaterial(String, byte)
    * @since 2.0.0
    */
-  @Nonnull
-  public static Optional<XMaterial> matchXMaterial(@Nonnull String name) {
+  @NonNull
+  public static Optional<XMaterial> matchXMaterial(@NonNull String name) {
     if (name == null || name.isEmpty())
       throw new IllegalArgumentException(
           "Cannot match a material with null or empty material name");
@@ -1688,13 +1704,13 @@ public enum XMaterial {
    * </pre>
    *
    * @param name the material string that consists of the material name, data and separator
-   *     character.
+   *             character.
    * @return the parsed XMaterial.
    * @see #matchXMaterial(String)
    * @since 3.0.0
    */
-  @Nonnull
-  private static Optional<XMaterial> matchXMaterialWithData(@Nonnull String name) {
+  @NonNull
+  private static Optional<XMaterial> matchXMaterialWithData(@NonNull String name) {
     int index = name.indexOf(':');
     if (index != -1) {
       String mat = format(name.substring(0, index));
@@ -1720,8 +1736,8 @@ public enum XMaterial {
    * @see #matchXMaterial(ItemStack)
    * @since 2.0.0
    */
-  @Nonnull
-  public static XMaterial matchXMaterial(@Nonnull Material material) {
+  @NonNull
+  public static XMaterial matchXMaterial(@NonNull Material material) {
     Objects.requireNonNull(material, "Cannot match null material");
     return matchDefinedXMaterial(material.name(), UNKNOWN_DATA_VALUE)
         .orElseThrow(
@@ -1740,9 +1756,9 @@ public enum XMaterial {
    * @see #matchXMaterial(Material)
    * @since 2.0.0
    */
-  @Nonnull
+  @NonNull
   @SuppressWarnings("deprecation")
-  public static XMaterial matchXMaterial(@Nonnull ItemStack item) {
+  public static XMaterial matchXMaterial(@NonNull ItemStack item) {
     Objects.requireNonNull(item, "Cannot match null ItemStack");
     String material = item.getType().name();
     byte data =
@@ -1760,8 +1776,7 @@ public enum XMaterial {
     // Potions used the items data value to store
     // information about the type of potion in 1.8
     if (!supports(9) && material.endsWith("ION")) {
-      // There's also 16000+ data value technique, but this is more reliable.
-      return Potion.fromItemStack(item).isSplash() ? SPLASH_POTION : POTION;
+      return ((item.getDurability() & 16384) > 0) ? SPLASH_POTION : POTION;
     }
 
     // Refer to the enum for info.
@@ -1792,15 +1807,15 @@ public enum XMaterial {
    *
    * @param name the formatted name of the material.
    * @param data the data value of the material. Is always 0 or {@link #UNKNOWN_DATA_VALUE} when
-   *     {@link Data#ISFLAT}
+   *             {@link Data#ISFLAT}
    * @return an XMaterial (with the same data value if specified)
    * @see #matchXMaterial(Material)
    * @see #matchXMaterial(int, byte)
    * @see #matchXMaterial(ItemStack)
    * @since 3.0.0
    */
-  @Nonnull
-  protected static Optional<XMaterial> matchDefinedXMaterial(@Nonnull String name, byte data) {
+  @NonNull
+  protected static Optional<XMaterial> matchDefinedXMaterial(@NonNull String name, byte data) {
     // if
     // (!Boolean.valueOf(Boolean.getBoolean(Boolean.TRUE.toString())).equals(Boolean.FALSE.booleanValue())) return null;
     Boolean duplicated = null;
@@ -1836,7 +1851,7 @@ public enum XMaterial {
    * @return true if there's a duplicated material for this material, otherwise false.
    * @since 2.0.0
    */
-  private static boolean isDuplicated(@Nonnull String name) {
+  private static boolean isDuplicated(@NonNull String name) {
     // Don't use matchXMaterial() since this method is being called from matchXMaterial() itself and
     // will cause a StackOverflowError.
     return DUPLICATED.contains(name);
@@ -1846,17 +1861,17 @@ public enum XMaterial {
    * Gets the XMaterial based on the material's ID (Magic Value) and data value.<br>
    * You should avoid using this for performance issues.
    *
-   * @param id the ID (Magic value) of the material.
+   * @param id   the ID (Magic value) of the material.
    * @param data the data value of the material.
    * @return a parsed XMaterial with the same ID and data value.
    * @see #matchXMaterial(ItemStack)
    * @since 2.0.0
    * @deprecated this method loops through all the available materials and matches their ID using
-   *     {@link #getId()} which takes a really long time. Plugins should no longer support IDs. If
-   *     you want, you can make a {@link Map} cache yourself. This method obviously doesn't work for
-   *     1.13+ and will not be supported. This is only here for debugging purposes.
+   * {@link #getId()} which takes a really long time. Plugins should no longer support IDs. If
+   * you want, you can make a {@link Map} cache yourself. This method obviously doesn't work for
+   * 1.13+ and will not be supported. This is only here for debugging purposes.
    */
-  @Nonnull
+  @NonNull
   @Deprecated
   public static Optional<XMaterial> matchXMaterial(int id, byte data) {
     if (id < 0 || id > MAX_ID || data < 0) return Optional.empty();
@@ -1876,8 +1891,8 @@ public enum XMaterial {
    * @return an enum name.
    * @since 2.0.0
    */
-  @Nonnull
-  protected static String format(@Nonnull String name) {
+  @NonNull
+  protected static String format(@NonNull String name) {
     int len = name.length();
     char[] chs = new char[len];
     int count = 0;
@@ -2033,9 +2048,9 @@ public enum XMaterial {
    * @see #parseItem()
    * @since 3.0.0
    */
-  @Nonnull
+  @NonNull
   @SuppressWarnings("deprecation")
-  public ItemStack setType(@Nonnull ItemStack item) {
+  public ItemStack setType(@NonNull ItemStack item) {
     Objects.requireNonNull(item, "Cannot set material for null ItemStack");
     Material material = this.parseMaterial();
     Objects.requireNonNull(material, () -> "Unsupported material: " + this.name());
@@ -2053,7 +2068,7 @@ public enum XMaterial {
    * @return true if it's one of the legacy names, otherwise false.
    * @since 2.0.0
    */
-  private boolean anyMatchLegacy(@Nonnull String name) {
+  private boolean anyMatchLegacy(@NonNull String name) {
     for (int i = this.legacy.length - 1; i >= 0; i--) {
       if (name.equals(this.legacy[i])) return true;
     }
@@ -2076,7 +2091,7 @@ public enum XMaterial {
    * @since 3.0.0
    */
   @Override
-  @Nonnull
+  @NonNull
   public String toString() {
     return Arrays.stream(name().split("_"))
         .map(t -> t.charAt(0) + t.substring(1).toLowerCase())
@@ -2089,7 +2104,7 @@ public enum XMaterial {
    * <p>Spigot added material ID support back in 1.16+
    *
    * @return the ID of the material or <b>-1</b> if it's not a legacy material or the server doesn't
-   *     support the material.
+   * support the material.
    * @see #matchXMaterial(int, byte)
    * @since 2.2.0
    */
@@ -2152,11 +2167,11 @@ public enum XMaterial {
    *
    * @param item item to check.
    * @return true if the material is the same as the item's material (and data value if on older
-   *     versions), otherwise false.
+   * versions), otherwise false.
    * @since 1.0.0
    */
   @SuppressWarnings("deprecation")
-  public boolean isSimilar(@Nonnull ItemStack item) {
+  public boolean isSimilar(@NonNull ItemStack item) {
     Objects.requireNonNull(item, "Cannot compare with null ItemStack");
     if (item.getType() != this.parseMaterial()) return false;
     return Data.ISFLAT
