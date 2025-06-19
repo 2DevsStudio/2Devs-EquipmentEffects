@@ -8,7 +8,6 @@ import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import com.ignitedev.devsequipmenteffects.util.XMaterial;
-import java.util.List;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 @Data
 public class BaseEquipment implements Applicable {
@@ -51,8 +52,8 @@ public class BaseEquipment implements Applicable {
           if (baseChecks.contains(BaseCheck.ALL_CHECKS)) {
             return this.itemStack.hasItemMeta() == targetItemStack.hasItemMeta()
                 && (!this.itemStack.hasItemMeta()
-                    || Bukkit.getItemFactory()
-                        .equals(this.itemStack.getItemMeta(), targetItemStack.getItemMeta()));
+                || Bukkit.getItemFactory()
+                .equals(this.itemStack.getItemMeta(), targetItemStack.getItemMeta()));
           } else {
             return isSimilarWithoutNBTCheck(targetItemStack);
           }

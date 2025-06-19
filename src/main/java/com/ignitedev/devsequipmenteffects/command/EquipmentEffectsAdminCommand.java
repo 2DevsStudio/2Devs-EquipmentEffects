@@ -6,12 +6,6 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import com.ignitedev.devsequipmenteffects.util.MinecraftVersion;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.logging.Level;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -30,6 +24,9 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.*;
+import java.util.logging.Level;
 
 @RequiredArgsConstructor
 public class EquipmentEffectsAdminCommand implements CommandExecutor {

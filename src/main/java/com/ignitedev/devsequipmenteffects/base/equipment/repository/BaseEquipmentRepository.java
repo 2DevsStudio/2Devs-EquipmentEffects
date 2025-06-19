@@ -2,14 +2,15 @@ package com.ignitedev.devsequipmenteffects.base.equipment.repository;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.interfaces.Repository;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import lombok.Data;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Data
 public class BaseEquipmentRepository implements Repository<BaseEquipment> {
@@ -23,7 +24,6 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
   }
 
   public @Nullable BaseEquipment findByItemStack(ItemStack itemStack) {
-
     if (itemStack == null || itemStack.getType() == Material.AIR) {
       return null;
     }
@@ -37,7 +37,6 @@ public class BaseEquipmentRepository implements Repository<BaseEquipment> {
   }
 
   public List<BaseEquipment> findAllByMaterial(Material material) {
-
     List<BaseEquipment> applicableBaseEquipments = new ArrayList<>();
 
     for (BaseEquipment value : baseEquipmentCache.values()) {

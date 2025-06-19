@@ -8,14 +8,15 @@ import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmentRepository;
 import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import lombok.Data;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 @Data
 public class BaseConfiguration {

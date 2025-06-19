@@ -14,18 +14,15 @@ public class BaseEffect implements Applicable {
 
   @Override
   public void apply(Player player) {
-
     player.addPotionEffect(getPotionEffect());
   }
 
   @Override
   public void unApply(Player player) {
-
     player.removePotionEffect(potionEffectType);
   }
 
   public PotionEffect getPotionEffect() {
-
     return new PotionEffect(getPotionEffectType(), Integer.MAX_VALUE, getAmplifier());
   }
 }

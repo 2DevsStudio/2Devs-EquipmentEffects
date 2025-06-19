@@ -1,10 +1,11 @@
 package com.ignitedev.devsequipmenteffects.base.effect;
 
 import com.ignitedev.devsequipmenteffects.interfaces.Applicable;
-import java.util.List;
 import lombok.Data;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import java.util.List;
 
 @Data
 public class BaseTrigger implements Applicable {
