@@ -89,8 +89,11 @@ public class BaseConfiguration {
       List<BaseEffect> applicableEffects =
           baseEffectFactory.convertToBaseEffects(fileYaml.getStringList("applicable-effects"));
       ItemStack itemStack = fileYaml.getItemStack("itemstack");
-      ItemMeta itemMeta = itemStack.getItemMeta();
+      ItemMeta itemMeta = null;
 
+      if (itemStack != null) {
+        itemMeta = itemStack.getItemMeta();
+      }
       if (itemMeta != null) {
         if (itemMeta.hasDisplayName()) {
           itemMeta.setDisplayName(BaseUtil.fixColor(itemMeta.getDisplayName()));

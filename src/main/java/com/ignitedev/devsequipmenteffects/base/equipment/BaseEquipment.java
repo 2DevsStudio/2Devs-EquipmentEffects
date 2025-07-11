@@ -87,21 +87,24 @@ public class BaseEquipment implements Applicable {
       return true; // Both items have no meta
     }
 
-    return checkMeta(
-            meta,
-            targetMeta,
-            BaseCheck.DISPLAY_NAME_CHECK,
-            ItemMeta::hasDisplayName,
-            ItemMeta::getDisplayName)
-        && checkMeta(meta, targetMeta, BaseCheck.LORE_CHECK, ItemMeta::hasLore, ItemMeta::getLore)
-        && checkMeta(
-            meta,
-            targetMeta,
-            BaseCheck.ENCHANTMENT_CHECK,
-            ItemMeta::hasEnchants,
-            ItemMeta::getEnchants)
-        && (!baseChecks.contains(BaseCheck.ITEM_FLAG_CHECK)
-            || meta.getItemFlags().equals(targetMeta.getItemFlags()));
+    if (targetMeta != null) {
+      return checkMeta(
+              meta,
+              targetMeta,
+              BaseCheck.DISPLAY_NAME_CHECK,
+              ItemMeta::hasDisplayName,
+              ItemMeta::getDisplayName)
+          && checkMeta(meta, targetMeta, BaseCheck.LORE_CHECK, ItemMeta::hasLore, ItemMeta::getLore)
+          && checkMeta(
+              meta,
+              targetMeta,
+              BaseCheck.ENCHANTMENT_CHECK,
+              ItemMeta::hasEnchants,
+              ItemMeta::getEnchants)
+          && (!baseChecks.contains(BaseCheck.ITEM_FLAG_CHECK)
+              || meta.getItemFlags().equals(targetMeta.getItemFlags()));
+    }
+    return false;
   }
 
   private <T> boolean checkMeta(
