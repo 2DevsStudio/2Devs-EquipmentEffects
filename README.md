@@ -7,14 +7,14 @@ particles or execute commands :)
 
 * Everything is configurable!
 * Stupid simple!
-* Easy configuration-side item creator ( also item creator by command )
-* Special Mode which saving tps by spliting operation to parts
+* Easy configuration-side item creator (also item creator by command)
+* Special Mode, which saving tps by splitting operation to parts
 * Plethora of Item configuration; All checks enabled separately, applicable potion effects, command on enable/disable
 * OpenSource!!!
 
 ## Supported Versions
 
-1.8.1 <-> 1.19.2
+1.8.1 <-> 1.21.4
 
 ## Permissions:
 
