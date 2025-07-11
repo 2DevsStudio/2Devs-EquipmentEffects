@@ -37,127 +37,105 @@ public class BaseEquipment implements Applicable {
   /*
    * this method needs checks if item have meta, lore etc
    */
-  public boolean isSimilar(@Nullable ItemStack targetItemStack) {
-
-    if (targetItemStack == null) {
+  public boolean isSimilar(@Nullable ItemStack target) {
+    if (target == null) {
       return false;
-    } else {
-      if (targetItemStack == this.itemStack) {
-        return true;
-      } else {
-        XMaterial itemstack = XMaterial.matchXMaterial(this.itemStack);
-        XMaterial targetItem = XMaterial.matchXMaterial(targetItemStack);
-
-        if (itemstack == targetItem) {
-          if (baseChecks.contains(BaseCheck.ALL_CHECKS)) {
-            return this.itemStack.hasItemMeta() == targetItemStack.hasItemMeta()
-                && (!this.itemStack.hasItemMeta()
-                || Bukkit.getItemFactory()
-                .equals(this.itemStack.getItemMeta(), targetItemStack.getItemMeta()));
-          } else {
-            return isSimilarWithoutNBTCheck(targetItemStack);
-          }
-        }
-      }
     }
-    return false;
-  }
-
-  private boolean processCheck(
-      boolean itemBoolean,
-      boolean targetBoolean,
-      Object itemObject,
-      Object targetObject,
-      BaseCheck baseCheck) {
-
-    if (!baseChecks.contains(baseCheck)) {
+    if (target == this.itemStack) {
       return true;
     }
 
-    boolean isSimilar = BaseUtil.compareBooleanPair(itemBoolean, targetBoolean);
+    XMaterial mat = XMaterial.matchXMaterial(this.itemStack);
+    XMaterial targetMat = XMaterial.matchXMaterial(target);
 
-    if (itemBoolean && targetBoolean) {
-      if (!itemObject.equals(targetObject)) {
-        isSimilar = false;
-      }
+    if (mat != targetMat) {
+      return false;
     }
-    return isSimilar;
+    return baseChecks.contains(BaseCheck.ALL_CHECKS)
+        ? compareWithMeta(target)
+        : isSimilarWithoutNBTCheck(target);
   }
 
-  private boolean isSimilarWithoutNBTCheck(@NotNull ItemStack targetItemStack) {
-    XMaterial itemstack = XMaterial.matchXMaterial(this.itemStack);
-    XMaterial targetItem = XMaterial.matchXMaterial(targetItemStack);
-
-    if (itemstack != targetItem) {
+  private boolean compareWithMeta(ItemStack target) {
+    boolean hasMeta = itemStack.hasItemMeta();
+    if (hasMeta != target.hasItemMeta()) {
       return false;
     }
+    return !hasMeta
+        || Bukkit.getItemFactory().equals(itemStack.getItemMeta(), target.getItemMeta());
+  }
 
-    ItemMeta targetMeta = targetItemStack.getItemMeta();
-    ItemMeta itemMeta = this.itemStack.getItemMeta();
+  private boolean processCheck(
+      boolean hasItem, boolean hasTarget, Object item, Object target, BaseCheck check) {
 
-    if (!BaseUtil.compareBooleanPair(targetMeta == null, itemMeta == null)) {
+    if (!baseChecks.contains(check)) {
+      return true;
+    }
+    if (!BaseUtil.compareBooleanPair(hasItem, hasTarget)) {
       return false;
     }
+    return !hasItem || item.equals(target);
+  }
 
-    // it might be nulled pair
-    if (targetMeta == null || itemMeta == null) {
+  private boolean isSimilarWithoutNBTCheck(@NotNull ItemStack target) {
+    ItemMeta meta = itemStack.getItemMeta();
+    ItemMeta targetMeta = target.getItemMeta();
+
+    if (!BaseUtil.compareBooleanPair(meta == null, targetMeta == null)) {
       return false;
     }
+    if (meta == null) {
+      return true; // Both items have no meta
+    }
 
-    boolean displayNameCheck =
-        processCheck(
-            itemMeta.hasDisplayName(),
-            targetMeta.hasDisplayName(),
-            itemMeta.getDisplayName(),
-            targetMeta.getDisplayName(),
-            BaseCheck.DISPLAY_NAME_CHECK);
-    boolean loreCheck =
-        processCheck(
-            itemMeta.hasLore(),
-            targetMeta.hasLore(),
-            itemMeta.getLore(),
-            targetMeta.getLore(),
-            BaseCheck.LORE_CHECK);
-    boolean enchantmentCheck =
-        processCheck(
-            itemMeta.hasEnchants(),
-            targetMeta.hasEnchants(),
-            itemMeta.getEnchants(),
-            targetMeta.getEnchants(),
-            BaseCheck.ENCHANTMENT_CHECK);
-    boolean flagCheck =
-        processCheck(
-            true,
-            true,
-            itemMeta.getItemFlags(),
-            targetMeta.getItemFlags(),
-            BaseCheck.ITEM_FLAG_CHECK);
+    return checkMeta(
+            meta,
+            targetMeta,
+            BaseCheck.DISPLAY_NAME_CHECK,
+            ItemMeta::hasDisplayName,
+            ItemMeta::getDisplayName)
+        && checkMeta(meta, targetMeta, BaseCheck.LORE_CHECK, ItemMeta::hasLore, ItemMeta::getLore)
+        && checkMeta(
+            meta,
+            targetMeta,
+            BaseCheck.ENCHANTMENT_CHECK,
+            ItemMeta::hasEnchants,
+            ItemMeta::getEnchants)
+        && (!baseChecks.contains(BaseCheck.ITEM_FLAG_CHECK)
+            || meta.getItemFlags().equals(targetMeta.getItemFlags()));
+  }
 
-    return displayNameCheck && loreCheck && enchantmentCheck && flagCheck;
+  private <T> boolean checkMeta(
+      ItemMeta meta1,
+      ItemMeta meta2,
+      BaseCheck check,
+      java.util.function.Function<ItemMeta, Boolean> hasCheck,
+      java.util.function.Function<ItemMeta, T> getter) {
+    if (!baseChecks.contains(check)) {
+      return true;
+    }
+    boolean has1 = hasCheck.apply(meta1);
+    boolean has2 = hasCheck.apply(meta2);
+    return has1 == has2 && (!has1 || getter.apply(meta1).equals(getter.apply(meta2)));
   }
 
   @Override
   public void apply(Player player) {
-
-    String playerUUID = player.getUniqueId().toString();
-    BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(playerUUID);
-
+    BasePlayer basePlayer = getPlayer(player);
     getBaseTrigger().apply(player);
-
     basePlayer.getActiveEquipment().add(this);
-
-    getEffectList().forEach(baseEffect -> baseEffect.apply(player));
+    getEffectList().forEach(effect -> effect.apply(player));
   }
 
   @Override
   public void unApply(Player player) {
-
-    String playerUUID = player.getUniqueId().toString();
-    BasePlayer basePlayer = EquipmentEffects.INSTANCE.basePlayerRepository.findById(playerUUID);
-
+    BasePlayer basePlayer = getPlayer(player);
     basePlayer.getActiveEquipment().remove(this);
-
     getBaseTrigger().unApply(player);
-    getEffectList().forEach(baseEffect -> baseEffect.unApply(player));
+    getEffectList().forEach(effect -> effect.unApply(player));
+  }
+
+  private BasePlayer getPlayer(Player player) {
+    return EquipmentEffects.INSTANCE.basePlayerRepository.findById(player.getUniqueId().toString());
   }
 }
