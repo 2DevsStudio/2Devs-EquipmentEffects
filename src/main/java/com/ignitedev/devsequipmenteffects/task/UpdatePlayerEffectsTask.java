@@ -4,13 +4,12 @@ import com.google.common.collect.Lists;
 import com.ignitedev.devsequipmenteffects.base.player.BasePlayer;
 import com.ignitedev.devsequipmenteffects.base.player.repository.BasePlayerRepository;
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RequiredArgsConstructor
 public class UpdatePlayerEffectsTask extends BukkitRunnable {
@@ -28,16 +27,14 @@ public class UpdatePlayerEffectsTask extends BukkitRunnable {
     if (cycle == -1) {
       // we don't want to skip index 0, so we reset on cycle -1
       // when cycles pass, we get online players again  and separate them to partitions
-
       List<Player> onlinePlayersList = new ArrayList<>(Bukkit.getOnlinePlayers());
 
       if (onlinePlayersList.isEmpty()) {
         return;
       }
-
       if (onlinePlayersList.size()
           < baseConfiguration.getUpdatePartitionsAmount()
-          * baseConfiguration.getPartitionMinimumPlayersMultiplier()) {
+              * baseConfiguration.getPartitionMinimumPlayersMultiplier()) {
 
         // if player amount is lower than (partition amount * multiplier), update inventories
         // instantly for

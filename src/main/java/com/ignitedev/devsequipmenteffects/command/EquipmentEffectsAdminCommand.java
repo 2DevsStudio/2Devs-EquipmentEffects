@@ -6,6 +6,8 @@ import com.ignitedev.devsequipmenteffects.base.equipment.repository.BaseEquipmen
 import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
 import com.ignitedev.devsequipmenteffects.util.MinecraftVersion;
+import java.io.*;
+import java.util.logging.Level;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import net.kyori.adventure.text.Component;
@@ -24,9 +26,6 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.*;
-import java.util.logging.Level;
 
 @RequiredArgsConstructor
 public class EquipmentEffectsAdminCommand implements CommandExecutor {
@@ -49,12 +48,10 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
     }
 
     if (args.length == 2 && args[0].equalsIgnoreCase("give")) {
-      if (!(sender instanceof Player)) {
+      if (!(sender instanceof Player senderPlayer)) {
         sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getThisCommandIsPlayerOnly()));
         return false;
       }
-
-      Player senderPlayer = (Player) sender;
 
       String identifier = args[1];
       BaseEquipment baseEquipmentById = baseEquipmentRepository.findById(identifier);
@@ -97,11 +94,10 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         }
       }
       if (builder != null) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player senderPlayer)) {
           sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getThisCommandIsPlayerOnly()));
           return false;
         }
-        Player senderPlayer = (Player) sender;
 
         equipmentEffects.adventure.player(senderPlayer).sendMessage(builder.build());
         return true;
@@ -118,11 +114,10 @@ public class EquipmentEffectsAdminCommand implements CommandExecutor {
         return false;
       }
 
-      if (!(sender instanceof Player)) {
+      if (!(sender instanceof Player senderPlayer)) {
         sender.sendMessage(BaseUtil.fixColor(baseConfiguration.getThisCommandIsPlayerOnly()));
         return false;
       }
-      Player senderPlayer = (Player) sender;
       ItemStack itemInHand;
 
       if (MinecraftVersion.isBefore(9)) {

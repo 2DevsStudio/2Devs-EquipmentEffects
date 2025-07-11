@@ -11,6 +11,5 @@ public enum BaseCheck {
   ITEM_FLAG_CHECK("item-checks.item-flag-check"),
   ALL_CHECKS("item-checks.all-checks");
 
-  @Getter
-  private final String yamlPath;
+  @Getter private final String yamlPath;
 }

@@ -11,6 +11,7 @@ import com.ignitedev.devsequipmenteffects.configuration.BaseConfiguration;
 import com.ignitedev.devsequipmenteffects.listeners.PlayerQuitListener;
 import com.ignitedev.devsequipmenteffects.listeners.PlayerSpawnListener;
 import com.ignitedev.devsequipmenteffects.task.UpdatePlayerEffectsTask;
+import java.util.logging.Level;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.apache.commons.lang3.Validate;
 import org.bstats.bukkit.Metrics;
@@ -19,8 +20,6 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.logging.Level;
 
 public final class EquipmentEffects extends JavaPlugin {
 

@@ -4,14 +4,13 @@ import com.ignitedev.devsequipmenteffects.EquipmentEffects;
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.base.equipment.factory.BaseEquipmentFactory;
 import com.ignitedev.devsequipmenteffects.util.BaseUtil;
-import lombok.Data;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import lombok.Data;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 
 @Data
 public class BasePlayer {

@@ -1,4 +1,3 @@
 package com.ignitedev.devsequipmenteffects.factory;
 
-public interface Factory {
-}
+public interface Factory {}
