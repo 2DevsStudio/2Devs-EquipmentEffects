@@ -2,13 +2,14 @@ package com.ignitedev.devsequipmenteffects.util;
 
 import com.ignitedev.devsequipmenteffects.base.equipment.BaseEquipment;
 import com.ignitedev.devsequipmenteffects.enums.BaseCheck;
+import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 @UtilityClass
 public class BaseUtil {
@@ -31,71 +32,52 @@ public class BaseUtil {
   }
 
   public List<BaseEquipment> findPlayerApplicableBaseEquipment(
-      Player player, List<BaseEquipment> baseEquipments) {
+      @NonNull Player player, @NonNull List<BaseEquipment> baseEquipments) {
 
-    List<BaseEquipment> appliedBaseEquipment = new ArrayList<>();
+    if (baseEquipments.isEmpty()) {
+      return List.of();
+    }
+    ItemStack itemInMainHand =
+        MinecraftVersion.isBefore(9)
+            ? player.getInventory().getItemInHand()
+            : player.getInventory().getItemInMainHand();
+    ItemStack itemInOffHand =
+        MinecraftVersion.isBefore(9)
+            ? player.getInventory().getItemInHand()
+            : player.getInventory().getItemInOffHand();
 
-    ItemStack itemInMainHand;
-    ItemStack itemInOffHand;
+    Set<BaseEquipment> appliedEquipment = new HashSet<>();
+    Set<String> processedIds = new HashSet<>();
 
-    if (MinecraftVersion.isBefore(9)) {
-      itemInMainHand = player.getInventory().getItemInHand();
-      itemInOffHand = player.getInventory().getItemInHand();
-    } else {
-      itemInMainHand = player.getInventory().getItemInMainHand();
-      itemInOffHand = player.getInventory().getItemInOffHand();
+    for (BaseEquipment equipment : baseEquipments) {
+      if (equipment == null || !processedIds.add(equipment.getIdentifier().toLowerCase())) {
+        continue; // Skip null or duplicate equipment
+      }
+      if (shouldApplyEquipment(equipment, player, itemInMainHand, itemInOffHand)) {
+        appliedEquipment.add(equipment);
+      }
+    }
+    return new ArrayList<>(appliedEquipment);
+  }
+
+  private boolean shouldApplyEquipment(
+      BaseEquipment equipment, Player player, ItemStack mainHand, ItemStack offHand) {
+    if (equipment.isMustWear()) {
+      return Stream.of(player.getInventory().getArmorContents())
+          .filter(Objects::nonNull)
+          .anyMatch(equipment::isSimilar);
+    }
+    boolean mustHoldMain = equipment.isMustHoldMainHand();
+    boolean mustHoldOff = equipment.isMustHoldOffHand();
+
+    if (mustHoldMain && mustHoldOff) {
+      return equipment.isSimilar(mainHand) || equipment.isSimilar(offHand);
+    } else if (mustHoldMain) {
+      return equipment.isSimilar(mainHand);
+    } else if (mustHoldOff) {
+      return equipment.isSimilar(offHand);
     }
 
-    baseEquipments.forEach(
-        baseEquipment -> {
-          boolean foundDuplicate = false;
-
-          for (BaseEquipment equipment : appliedBaseEquipment) {
-            if (equipment.getIdentifier().equalsIgnoreCase(baseEquipment.getIdentifier())) {
-              foundDuplicate = true;
-              break;
-            }
-          }
-          if (foundDuplicate) {
-            return;
-          }
-
-          boolean shouldApply = false;
-
-          if (baseEquipment == null) {
-            return;
-          }
-
-          if (!baseEquipment.isMustWear()) {
-            if (baseEquipment.isMustHoldMainHand() && baseEquipment.isMustHoldOffHand()) {
-              if (baseEquipment.isSimilar(itemInMainHand)
-                  || baseEquipment.isSimilar(itemInOffHand)) {
-                shouldApply = true;
-              }
-            } else if (baseEquipment.isMustHoldMainHand()) {
-              if (baseEquipment.isSimilar(itemInMainHand)) {
-                shouldApply = true;
-              }
-            } else if (baseEquipment.isMustHoldOffHand()) {
-              if (baseEquipment.isSimilar(itemInOffHand)) {
-                shouldApply = true;
-              }
-            } else if (!baseEquipment.isMustWear()) {
-              shouldApply = true;
-            }
-          } else {
-            for (ItemStack armorContent : player.getInventory().getArmorContents()) {
-              if (baseEquipment.isSimilar(armorContent)) {
-                shouldApply = true;
-                break;
-              }
-            }
-          }
-          if (shouldApply) {
-            appliedBaseEquipment.add(baseEquipment);
-          }
-        });
-
-    return appliedBaseEquipment;
+    return true;
   }
 }
